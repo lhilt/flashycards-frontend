@@ -1,0 +1,12 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: #444444;
+}
+
+.decklist {
+  width: 35vw;
+  height: 100%;
+  overflow-y: scroll;
+  background: rgba(106, 106, 106, 0.6);
+}
