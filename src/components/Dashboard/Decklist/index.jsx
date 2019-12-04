@@ -1,8 +1,17 @@
 import React from 'react';
 
-const Decklist = (props) => (
+import Deck from './Deck';
+
+const Decklist = ({ decks, selectDeck }) => (
   <section className="decklist">
     <h2>I'm a deck list</h2>
+    {decks.map(deck => (
+      <Deck
+        key={deck.id}
+        deck={deck}
+        selectDeck={selectDeck}
+      />
+    ))}
   </section>
 );
 
