@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Navbar from './components/Navbar';
-import Landing from './components/Landing';
+import MainRoutes from './config/MainRoutes';
 import './App.css';
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
           toggleAuthForm={this.toggleAuthForm}
           signup={this.state.signup}
         />
-        <Landing signup={this.state.signup}/>
+        <MainRoutes signup={this.state.signup}/>
       </div>
     );
   }
