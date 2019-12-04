@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import Navbar from './components/Navbar';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hi</h1>
-    </div>
-  );
+class App extends Component {
+  state = {
+    currentUser: null,
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Navbar />
+        <h1>Hi</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
