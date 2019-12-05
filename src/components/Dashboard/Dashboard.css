@@ -10,3 +10,7 @@
   overflow-y: scroll;
   background: rgba(106, 106, 106, 0.6);
 }
+
+.detail {
+  width: 100%;
+}
