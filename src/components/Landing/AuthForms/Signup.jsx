@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
+import API from '../../../helperScripts/api';
 
 class SignupForm extends Component {
   state = {
@@ -17,13 +18,10 @@ class SignupForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(
-      `http://localhost:8000/signup`,
-      this.state,
-      { withCredentials: true }
-    )
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    const newUser = this.state;
+    API.signUpUser(newUser)
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
   };
 
   render() {
