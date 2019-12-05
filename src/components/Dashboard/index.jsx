@@ -8,6 +8,7 @@ import './Dashboard.css';
 class Dashboard extends Component {
   state = {
     selectedDeck: null,
+    createDeck: false,
     decks: [],
   };
 
@@ -17,7 +18,7 @@ class Dashboard extends Component {
     });
   };
 
-  // edit, delete deck methods
+  // edit, delete, create deck methods
 
   componentDidMount() {
     const userPk = 1;
@@ -39,7 +40,10 @@ class Dashboard extends Component {
           selectedDeck={this.state.selectedDeck}
           selectDeck={this.selectDeck}
         />
-        <Detail selectedDeck={this.state.selectedDeck} /> {/* replace w/ routes */}
+        <Detail
+          selectedDeck={this.state.selectedDeck}
+          createDeck={this.state.createDeck}
+        />
       </main>
     );
   }

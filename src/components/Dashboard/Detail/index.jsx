@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Card from './Card';
+import CreateCard from './Forms/CreateCard';
 
 class Detail extends Component {
   state = {
     cards: [],
     currentCardIndex: 0,
     showFront: true,
+    createCard: false,
     ajaxLoaded: false,
   };
 
@@ -66,8 +68,64 @@ class Detail extends Component {
     }
   };
 
-  display = () => {
+  toggleCreateCard = () => {
+    this.setState(prevState => ({
+      createCard: !prevState.createCard,
+    }));
+  };
 
+  handleCardCreateSubmit = (e, newCard) => {
+    e.preventDefault();
+    const userPk = 1;
+    const deckPk = this.props.selectedDeck.id;
+    axios.post(
+      `http://localhost:8000/api/v1/users/${userPk}/decks/${deckPk}/cards/new`,
+      newCard
+    )
+      .then(res => {
+        console.log(res);
+        const newCard = res.data.card;
+        this.setState({
+          cards: this.state.cards.concat(newCard),
+        })
+      })
+      .catch(err => console.log(err));
+
+    this.toggleCreateCard();
+    console.log('create card submit');
+  };
+
+  chooseComponentToDisplay = () => {
+    const {cards, showFront, createCard, ajaxLoaded } = this.state;
+    const card = cards[this.state.currentCardIndex];
+    if (this.props.createDeck) {
+      return <h1>Create Deck</h1>
+
+    } else if (createCard) {
+      return (
+        <CreateCard
+          toggleCreateCard={this.toggleCreateCard}
+          handleSubmit={this.handleCardCreateSubmit}
+        />
+      );
+
+    } else if (ajaxLoaded) {
+      return (
+        <div>
+          <div className="add-card">
+            <button
+              className="btn btn-info"
+              onClick={this.toggleCreateCard}
+            >
+              + Add a Card
+            </button>
+          </div>
+          <Card text={showFront ? card.front : card.back} key={card.id} />
+        </div>
+      )
+    } else {
+      return null;
+    }
   };
 
   componentDidMount() {
@@ -79,20 +137,18 @@ class Detail extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.selectedDeck !== this.props.selectedDeck) {
-      this.fetchCards();
       this.setState({
         showFront: true,
+        ajaxLoaded: false,
       });
+      this.fetchCards();
     }
   }
 
   render() {
-    const { cards, currentCardIndex, showFront, ajaxLoaded } = this.state;
-    const card = cards[currentCardIndex];
     return (
       <div>
-        {ajaxLoaded &&
-          <Card text={showFront ? card.front : card.back} key={card.id} />}
+        {this.chooseComponentToDisplay()}
       </div>
     );
   }
