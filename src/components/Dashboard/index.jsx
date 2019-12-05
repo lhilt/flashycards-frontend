@@ -22,7 +22,10 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const userPk = 1;
-    axios.get(`http://localhost:8000/api/v1/users/${userPk}/decks`)
+    axios.get(
+      `http://localhost:8000/api/v1/users/${userPk}/decks`,
+      { withCredentials: true }
+    )
       .then(res => {
         console.log(res);
         this.setState({
