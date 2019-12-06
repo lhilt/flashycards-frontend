@@ -13,7 +13,6 @@ class Dashboard extends Component {
   };
 
   fetchDecks = () => {
-    const userPk = 1;
     GET(`/api/v1/decks`)
     .then(res => {
       this.setState({

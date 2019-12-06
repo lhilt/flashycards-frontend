@@ -78,7 +78,6 @@ class Detail extends Component {
 
   handleCardCreateSubmit = (e, newCard) => {
     e.preventDefault();
-    const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
 
     POST(`/api/v1/decks/${deckPk}/cards/new`, newCard)
@@ -102,9 +101,6 @@ class Detail extends Component {
   handleCardEditSubmit = (e, updated) => {
     e.preventDefault();
     const { cards, currentCardIndex } = this.state;
-
-    const userPk = 1;
-    const deckPk = this.props.selectedDeck.id;
     const cardPk = cards[currentCardIndex].id;
 
     PUT(`/api/v1/cards/${cardPk}/edit`, updated)
@@ -123,9 +119,6 @@ class Detail extends Component {
 
   handleDeleteSubmit = (card) => {
     const { cards } = this.state;
-
-    const userPk = 1;
-    const deckPk = this.props.selectedDeck.id;
     const cardPk = card.id;
 
     setTimeout(1000);
