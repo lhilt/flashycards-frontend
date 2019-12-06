@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
+import API from '../../../helperScripts/api';
 import Card from './Card';
 import CreateCard from './Forms/CreateCard';
+import EditCard from './Forms/EditCard';
 
 class Detail extends Component {
   state = {
@@ -10,13 +11,14 @@ class Detail extends Component {
     currentCardIndex: 0,
     showFront: true,
     createCard: false,
+    editCard: false,
     ajaxLoaded: false,
   };
 
   fetchCards = () => {
-    const userId = 1;
-    const deckId = this.props.selectedDeck.id;
-    axios.get(`http://localhost:8000/api/v1/users/${userId}/decks/${deckId}/cards`)
+    const userPk = 1;
+    const deckPk = this.props.selectedDeck.id;
+    API.getAllCards(userPk, deckPk)
       .then(res => {
         this.setState({
           cards: res.data.cards,
@@ -31,7 +33,7 @@ class Detail extends Component {
     const nextIndex =
       currentCardIndex === cards.length - 1
       ?
-      currentCardIndex
+      0
       :
       currentCardIndex + 1;
 
@@ -42,13 +44,13 @@ class Detail extends Component {
   };
 
   prev = () => {
-    const { currentCardIndex } = this.state;
+    const { cards, currentCardIndex } = this.state;
     let prevIndex =
       currentCardIndex - 1 >= 0
       ?
       currentCardIndex - 1
       :
-      currentCardIndex;
+      cards.length - 1;
 
     this.setState({
       currentCardIndex: prevIndex,
@@ -78,12 +80,8 @@ class Detail extends Component {
     e.preventDefault();
     const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
-    axios.post(
-      `http://localhost:8000/api/v1/users/${userPk}/decks/${deckPk}/cards/new`,
-      newCard
-    )
+    API.createCard(userPk, deckPk, newCard)
       .then(res => {
-        console.log(res);
         const newCard = res.data.card;
         this.setState({
           cards: this.state.cards.concat(newCard),
@@ -92,11 +90,80 @@ class Detail extends Component {
       .catch(err => console.log(err));
 
     this.toggleCreateCard();
-    console.log('create card submit');
+  };
+
+  toggleEditCard = () => {
+    this.setState(prevState => ({
+      editCard: !prevState.editCard,
+    }));
+  };
+
+  handleCardEditSubmit = (e, updated) => {
+    e.preventDefault();
+    const { cards, currentCardIndex } = this.state;
+
+    const userPk = 1;
+    const deckPk = this.props.selectedDeck.id;
+    const cardPk = cards[currentCardIndex].id;
+
+    API.editCard(userPk, deckPk, cardPk, updated)
+      .then(res => {
+        const edited = res.data.card;
+        const updatedCards = [...cards];
+        updatedCards[currentCardIndex] = edited;
+        this.setState({
+          cards: updatedCards,
+        })
+      })
+      .catch(err => console.log(err));
+
+    this.toggleEditCard();
+  };
+
+  handleDeleteSubmit = (card) => {
+    const { cards } = this.state;
+
+    const userPk = 1;
+    const deckPk = this.props.selectedDeck.id;
+    const cardPk = card.id;
+
+    setTimeout(1000);
+    API.deleteCard(userPk, deckPk, cardPk)
+      .then((res) => {
+        this.setState({
+          cards: cards.filter(x => x !== card),
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  displayDeleteModal = () => {
+    const card = this.state.cards[this.state.currentCardIndex];
+    return (
+      <div className="modal fade" id="deletemodal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              This will permanently delete this card
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-info" data-dismiss="modal" onClick={()=>this.handleDeleteSubmit(card)}>Delete Forever</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   chooseComponentToDisplay = () => {
-    const {cards, showFront, createCard, ajaxLoaded } = this.state;
+    const {cards, showFront, createCard, editCard, ajaxLoaded } = this.state;
     const card = cards[this.state.currentCardIndex];
     if (this.props.createDeck) {
       return <h1>Create Deck</h1>
@@ -108,7 +175,14 @@ class Detail extends Component {
           handleSubmit={this.handleCardCreateSubmit}
         />
       );
-
+    } else if (editCard) {
+      return (
+        <EditCard
+          toggleEditCard={this.toggleEditCard}
+          handleSubmit={this.handleCardEditSubmit}
+          card={card}
+        />
+      );
     } else if (ajaxLoaded) {
       return (
         <div>
@@ -120,7 +194,12 @@ class Detail extends Component {
               + Add a Card
             </button>
           </div>
-          <Card text={showFront ? card.front : card.back} key={card.id} />
+          <Card
+            key={card.id}
+            text={showFront ? card.front : card.back}
+            toggleEditCard={this.toggleEditCard}
+          />
+          {this.displayDeleteModal()}
         </div>
       )
     } else {

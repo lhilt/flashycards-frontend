@@ -5,3 +5,17 @@
   margin: 20px 10vw;
   box-shadow: 3px 11px 20px -4px rgba(0, 0, 0, 0.34);
 }
+
+.card-options {
+  text-align: right;
+}
+
+.card-options-link {
+  display: inline-block;
+  color: #17a2b8;
+  margin: 4px 6px;
+}
+
+.card-options-link:hover {
+  cursor: pointer;
+}

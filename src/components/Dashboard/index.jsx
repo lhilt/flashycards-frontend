@@ -27,7 +27,6 @@ class Dashboard extends Component {
       { withCredentials: true }
     )
       .then(res => {
-        console.log(res);
         this.setState({
           decks: res.data.decks,
         })
