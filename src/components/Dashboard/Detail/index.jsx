@@ -17,9 +17,8 @@ class Detail extends Component {
   };
 
   fetchCards = () => {
-    const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
-    GET(`/api/v1/users/${userPk}/decks/${deckPk}/cards`)
+    GET(`/api/v1/decks/${deckPk}/cards`)
       .then(res => {
         this.setState({
           cards: res.data.cards,
@@ -82,7 +81,7 @@ class Detail extends Component {
     const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
 
-    POST(`/api/v1/users/${userPk}/decks/${deckPk}/cards/new`, newCard)
+    POST(`/api/v1/decks/${deckPk}/cards/new`, newCard)
       .then(res => {
         const newCard = res.data.card;
         this.setState({
@@ -108,7 +107,7 @@ class Detail extends Component {
     const deckPk = this.props.selectedDeck.id;
     const cardPk = cards[currentCardIndex].id;
 
-    PUT(`/api/v1/users/${userPk}/decks/${deckPk}/cards/${cardPk}/edit`, updated)
+    PUT(`/api/v1/cards/${cardPk}/edit`, updated)
       .then(res => {
         const edited = res.data.card;
         const updatedCards = [...cards];
@@ -130,7 +129,7 @@ class Detail extends Component {
     const cardPk = card.id;
 
     setTimeout(1000);
-    DELETE(`/api/v1/users/${userPk}/decks/${deckPk}/cards/${cardPk}/delete`)
+    DELETE(`/api/v1/cards/${cardPk}/delete`)
       .then((res) => {
         this.setState({
           cards: cards.filter(x => x !== card),

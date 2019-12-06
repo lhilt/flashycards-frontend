@@ -14,7 +14,7 @@ class Dashboard extends Component {
 
   fetchDecks = () => {
     const userPk = 1;
-    GET(`/api/v1/users/${userPk}/decks`)
+    GET(`/api/v1/decks`)
     .then(res => {
       this.setState({
         decks: res.data.decks,
@@ -38,8 +38,7 @@ class Dashboard extends Component {
   // edit, delete, create deck methods
   handleDeckCreateSubmit = (e, newDeck) => {
     e.preventDefault();
-    const userPk = 1;
-    POST(`/api/v1/users/${userPk}/decks/new`, newDeck)
+    POST(`/api/v1/decks/new`, newDeck)
       .then(res => {
         const newDeck = res.data.deck;
         this.setState({
