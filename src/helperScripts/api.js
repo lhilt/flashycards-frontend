@@ -67,7 +67,20 @@ class API {
   }
 
   /* ------ DECK ------ */
+  static getAllDecks(userPk) {
+    return axios.get(
+      `http://localhost:8000/api/v1/users/${userPk}/decks`,
+      this.AUTH_OPTIONS
+    )
+  }
 
+  static createDeck(userPk, newDeck) {
+    return axios.post(
+      `http://localhost:8000/api/v1/users/${userPk}/decks/new`,
+      newDeck,
+      this.AUTH_OPTIONS
+    );
+  }
 }
 
 export default API;

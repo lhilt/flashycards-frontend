@@ -4,6 +4,7 @@ import API from '../../../helperScripts/api';
 import Card from './Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
+import CreateDeck from '../Decklist/Forms/CreateDeck';
 
 class Detail extends Component {
   state = {
@@ -163,12 +164,11 @@ class Detail extends Component {
   };
 
   chooseComponentToDisplay = () => {
-    const {cards, showFront, createCard, editCard, ajaxLoaded } = this.state;
+    const {cards, showFront, ajaxLoaded } = this.state;
+    const { createCard, editCard } = this.state;
+    const { createDeck } = this.props;
     const card = cards[this.state.currentCardIndex];
-    if (this.props.createDeck) {
-      return <h1>Create Deck</h1>
-
-    } else if (createCard) {
+    if (createCard) {
       return (
         <CreateCard
           toggleCreateCard={this.toggleCreateCard}
@@ -183,6 +183,13 @@ class Detail extends Component {
           card={card}
         />
       );
+    } else if (createDeck) {
+      return (
+        <CreateDeck
+          toggleCreateDeck={this.props.toggleCreateDeck}
+          handleSubmit={this.props.handleDeckCreateSubmit}
+        />
+      );
     } else if (ajaxLoaded) {
       return (
         <div>
@@ -194,11 +201,12 @@ class Detail extends Component {
               + Add a Card
             </button>
           </div>
-          <Card
-            key={card.id}
-            text={showFront ? card.front : card.back}
-            toggleEditCard={this.toggleEditCard}
-          />
+          {cards.length > 0 &&
+            <Card
+              key={card.id}
+              text={showFront ? card.front : card.back}
+              toggleEditCard={this.toggleEditCard}
+            />}
           {this.displayDeleteModal()}
         </div>
       )

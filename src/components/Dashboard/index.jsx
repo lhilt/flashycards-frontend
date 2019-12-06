@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
+import API from '../../helperScripts/api';
 import Decklist from './Decklist';
 import Detail from './Detail';
 import './Dashboard.css';
@@ -12,26 +12,47 @@ class Dashboard extends Component {
     decks: [],
   };
 
+  fetchDecks = () => {
+    const userPk = 1;
+    API.getAllDecks(userPk)
+    .then(res => {
+      this.setState({
+        decks: res.data.decks,
+      })
+    })
+    .catch(err => console.log(err));
+  };
+
   selectDeck = (deck) => {
     this.setState({
       selectedDeck: deck,
     });
   };
 
-  // edit, delete, create deck methods
+  toggleCreateDeck = () => {
+    this.setState(prevState => ({
+      createDeck: !prevState.createDeck,
+    }));
+  };
 
-  componentDidMount() {
+  // edit, delete, create deck methods
+  handleDeckCreateSubmit = (e, newDeck) => {
+    e.preventDefault();
     const userPk = 1;
-    axios.get(
-      `http://localhost:8000/api/v1/users/${userPk}/decks`,
-      { withCredentials: true }
-    )
+    API.createDeck(userPk, newDeck)
       .then(res => {
+        const newDeck = res.data.deck;
         this.setState({
-          decks: res.data.decks,
+          decks: [newDeck, ...this.state.decks],
         })
       })
       .catch(err => console.log(err));
+
+    this.toggleCreateDeck();
+  };
+
+  componentDidMount() {
+    this.fetchDecks();
   }
 
   render() {
@@ -41,10 +62,12 @@ class Dashboard extends Component {
           decks={this.state.decks}
           selectedDeck={this.state.selectedDeck}
           selectDeck={this.selectDeck}
+          toggleCreateDeck={this.toggleCreateDeck}
         />
         <Detail
           selectedDeck={this.state.selectedDeck}
           createDeck={this.state.createDeck}
+          handleDeckCreateSubmit={this.handleDeckCreateSubmit}
         />
       </main>
     );
