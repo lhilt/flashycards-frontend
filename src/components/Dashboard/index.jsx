@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import API from '../../helperScripts/api';
+import { GET, POST } from '../../helperScripts/ajax';
 import Decklist from './Decklist';
 import Detail from './Detail';
 import './Dashboard.css';
@@ -14,7 +14,7 @@ class Dashboard extends Component {
 
   fetchDecks = () => {
     const userPk = 1;
-    API.getAllDecks(userPk)
+    GET(`/api/v1/users/${userPk}/decks`)
     .then(res => {
       this.setState({
         decks: res.data.decks,
@@ -39,7 +39,7 @@ class Dashboard extends Component {
   handleDeckCreateSubmit = (e, newDeck) => {
     e.preventDefault();
     const userPk = 1;
-    API.createDeck(userPk, newDeck)
+    POST(`/api/v1/users/${userPk}/decks/new`, newDeck)
       .then(res => {
         const newDeck = res.data.deck;
         this.setState({

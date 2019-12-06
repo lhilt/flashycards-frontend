@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import API from '../../../helperScripts/api';
+import { GET, POST, PUT, DELETE } from '../../../helperScripts/ajax';
 import Card from './Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
@@ -19,7 +19,7 @@ class Detail extends Component {
   fetchCards = () => {
     const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
-    API.getAllCards(userPk, deckPk)
+    GET(`/api/v1/users/${userPk}/decks/${deckPk}/cards`)
       .then(res => {
         this.setState({
           cards: res.data.cards,
@@ -81,7 +81,8 @@ class Detail extends Component {
     e.preventDefault();
     const userPk = 1;
     const deckPk = this.props.selectedDeck.id;
-    API.createCard(userPk, deckPk, newCard)
+
+    POST(`/api/v1/users/${userPk}/decks/${deckPk}/cards/new`, newCard)
       .then(res => {
         const newCard = res.data.card;
         this.setState({
@@ -107,7 +108,7 @@ class Detail extends Component {
     const deckPk = this.props.selectedDeck.id;
     const cardPk = cards[currentCardIndex].id;
 
-    API.editCard(userPk, deckPk, cardPk, updated)
+    PUT(`/api/v1/users/${userPk}/decks/${deckPk}/cards/${cardPk}/edit`, updated)
       .then(res => {
         const edited = res.data.card;
         const updatedCards = [...cards];
@@ -129,7 +130,7 @@ class Detail extends Component {
     const cardPk = card.id;
 
     setTimeout(1000);
-    API.deleteCard(userPk, deckPk, cardPk)
+    DELETE(`/api/v1/users/${userPk}/decks/${deckPk}/cards/${cardPk}/delete`)
       .then((res) => {
         this.setState({
           cards: cards.filter(x => x !== card),

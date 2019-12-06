@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import API from '../../../helperScripts/api';
+import { POST } from '../../../helperScripts/ajax';
 
 class SignupForm extends Component {
   state = {
@@ -19,7 +19,7 @@ class SignupForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const newUser = this.state;
-    API.signUpUser(newUser)
+    POST('/signup', newUser)
     .then(res => console.log(res))
     .catch(err => console.log(err));
   };
