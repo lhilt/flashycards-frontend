@@ -5,6 +5,7 @@ import Card from './Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
 import CreateDeck from '../Decklist/Forms/CreateDeck';
+import './Detail.css';
 
 class Detail extends Component {
   state = {
@@ -186,14 +187,12 @@ class Detail extends Component {
     } else if (ajaxLoaded) {
       return (
         <div>
-          <div className="add-card">
-            <button
-              className="btn btn-info"
-              onClick={this.toggleCreateCard}
-            >
-              + Add a Card
-            </button>
-          </div>
+          <button
+            className="btn btn-info add-card"
+            onClick={this.toggleCreateCard}
+          >
+            + Add a Card
+          </button>
           {cards.length > 0 &&
             <Card
               key={card.id}

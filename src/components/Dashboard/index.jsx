@@ -54,16 +54,17 @@ class Dashboard extends Component {
   }
 
   render() {
+    const { selectedDeck } = this.state;
     return (
       <main className="dashboard">
         <Decklist
           decks={this.state.decks}
-          selectedDeck={this.state.selectedDeck}
+          selectedDeckId={selectedDeck && selectedDeck.id}
           selectDeck={this.selectDeck}
           toggleCreateDeck={this.toggleCreateDeck}
         />
         <Detail
-          selectedDeck={this.state.selectedDeck}
+          selectedDeck={selectedDeck}
           createDeck={this.state.createDeck}
           handleDeckCreateSubmit={this.handleDeckCreateSubmit}
         />

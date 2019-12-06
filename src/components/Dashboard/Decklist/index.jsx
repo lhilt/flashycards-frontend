@@ -2,21 +2,20 @@ import React from 'react';
 
 import Deck from './Deck';
 
-const Decklist = ({ decks, selectDeck, toggleCreateDeck }) => (
+const Decklist = ({ decks, selectDeck, selectedDeckId, toggleCreateDeck }) => (
   <section className="decklist">
-    <div className="add-deck">
-            <button
-              className="btn btn-info"
-              onClick={toggleCreateDeck}
-            >
-              + Add a Deck
-            </button>
-          </div>
+    <button
+      className="btn btn-info add-deck"
+      onClick={toggleCreateDeck}
+    >
+      + Add a Deck
+    </button>
     {decks.map(deck => (
       <Deck
         key={deck.id}
         deck={deck}
         selectDeck={selectDeck}
+        highlight={selectedDeckId === deck.id}
       />
     ))}
   </section>

@@ -11,6 +11,11 @@
   background: rgba(106, 106, 106, 0.6);
 }
 
+.add-deck {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
 .detail {
   width: 100%;
 }
