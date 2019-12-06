@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { POST } from '../../../helperScripts/ajax';
 
@@ -16,11 +17,14 @@ class SignupForm extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, newUser) => {
     e.preventDefault();
-    const newUser = this.state;
     POST('/signup', newUser)
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res);
+      this.props.history.push('/dashboard');
+      this.props.setUser(newUser.username);
+    })
     .catch(err => console.log(err));
   };
 
@@ -28,7 +32,7 @@ class SignupForm extends Component {
     return (
       <div className="jumbotron">
         <h2>Sign Up</h2>
-        <form id="signup" className="needs-validation" noValidate onSubmit={this.handleSubmit}>
+        <form id="signup" className="needs-validation" noValidate onSubmit={(e)=>this.handleSubmit(e, this.state)}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input type="username" name="username" className="form-control" id="username" placeholder="Enter username" value={this.state.username} onChange={this.handleChange} />
@@ -53,4 +57,4 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm;
+export default withRouter(SignupForm);

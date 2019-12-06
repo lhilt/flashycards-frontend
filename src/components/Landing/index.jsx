@@ -6,6 +6,7 @@ import './Landing.css';
 
 class Landing extends Component {
   render() {
+    const setUser = this.props.setCurrentUser
     return (
       <main className="landing row">
         <section className="col-lg hook">
@@ -13,7 +14,11 @@ class Landing extends Component {
           <h3>The ultimate place to study.</h3>
         </section>
         <section className="col-lg container" id="form-container">
-          {this.props.signup ? <SignupForm /> : <SigninForm />}
+          {this.props.signup
+            ?
+            <SignupForm setUser={setUser} />
+            :
+            <SigninForm setUser={setUser} />}
         </section>
     </main>
     );

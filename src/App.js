@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
+import { DELETE } from './helperScripts/ajax';
 import Navbar from './components/Navbar';
 import MainRoutes from './config/MainRoutes';
 import './App.css';
 
 class App extends Component {
   state = {
-    currentUser: null,
-    signup: true,
+    currentUsername: localStorage.getItem('username'),
+    signupForm: true,
   };
+
+  setCurrentUser = (username) => {
+    localStorage.setItem('username', username)
+    this.setState({
+      currentUsername: username,
+    });
+  };
+
+  logoutUser = () => {
+    localStorage.removeItem('username');
+    DELETE('/logout');
+    this.setState({
+      currentUsername: null,
+    });
+    this.props.history.push('/');
+  }
 
   toggleAuthForm = () => {
     this.setState(prevState => ({
-      signup: !prevState.signup,
+      signupForm: !prevState.signupForm,
     }));
   };
 
@@ -21,12 +39,17 @@ class App extends Component {
       <div className="App">
         <Navbar
           toggleAuthForm={this.toggleAuthForm}
-          signup={this.state.signup}
+          signup={this.state.signupForm}
+          currentUsername={this.state.currentUsername}
+          logoutUser={this.logoutUser}
         />
-        <MainRoutes signup={this.state.signup}/>
+        <MainRoutes
+          signup={this.state.signupForm}
+          setCurrentUser={this.setCurrentUser}
+        />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

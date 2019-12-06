@@ -86,6 +86,7 @@ class Detail extends Component {
         const newCard = res.data.card;
         this.setState({
           cards: this.state.cards.concat(newCard),
+          showFront: true,
         })
       })
       .catch(err => console.log(err));

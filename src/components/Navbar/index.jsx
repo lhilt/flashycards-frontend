@@ -3,8 +3,27 @@ import React, { Component } from 'react';
 import './Navbar.css';
 
 class Navbar extends Component {
+  displayNavOptions = () => {
+    const { currentUsername, toggleAuthForm, signup, logoutUser } = this.props;
+    if (!currentUsername) {
+      return (
+        <li className="nav-item">
+          <span className="nav-link" onClick={toggleAuthForm}>
+            {signup ? 'Sign In' : 'Sign Up'}
+          </span>
+        </li>
+      );
+    }
+    return (
+      <li className="nav-item">
+        <span className="nav-link" onClick={logoutUser}>
+          Logout
+        </span>
+      </li>
+    );
+  };
+
   render() {
-    const { signup, toggleAuthForm } = this.props;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <a className="navbar-brand" href="/">Unnamed Flashcard App</a>
@@ -13,11 +32,7 @@ class Navbar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="navbarsExample03">
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <span className="nav-link" onClick={toggleAuthForm}>
-                {signup ? 'Sign In' : 'Sign Up'}
-              </span>
-            </li>
+            {this.displayNavOptions()}
           </ul>
         </div>
       </nav>

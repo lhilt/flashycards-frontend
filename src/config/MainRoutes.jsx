@@ -7,7 +7,10 @@ import Dashboard from '../components/Dashboard';
 export default (props) => (
   <Switch>
     <Route exact path='/'>
-      <Landing signup={props.signup} />
+      <Landing
+        signup={props.signup}
+        setCurrentUser={props.setCurrentUser}
+      />
     </Route>
     <Route path='/:username'>
       <Dashboard />

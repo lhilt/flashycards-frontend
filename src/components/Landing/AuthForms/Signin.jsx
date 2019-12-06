@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { POST } from '../../../helperScripts/ajax';
 
@@ -14,17 +15,21 @@ class SigninForm extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, userInfo) => {
     e.preventDefault();
 
-    POST('/login', this.state)
-    .then(res => console.log(res))
+    POST('/login', userInfo)
+    .then(res => {
+      console.log(res);
+      this.props.history.push('/dashboard');
+      this.props.setUser(userInfo.username);
+    })
     .catch(err => console.log(err));
   };
 
   render() {
     return (
-      <div className="jumbotron" id="signin-form" onSubmit={this.handleSubmit}>
+      <div className="jumbotron" id="signin-form" onSubmit={(e) => this.handleSubmit(e, this.state)}>
         <h2>Sign In</h2>
         <form id="signin">
           <div className="form-group">
@@ -60,4 +65,4 @@ class SigninForm extends Component {
   }
 }
 
-export default SigninForm;
+export default withRouter(SigninForm);
