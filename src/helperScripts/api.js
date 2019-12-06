@@ -31,7 +31,12 @@ class API {
     return axios.post(
       `http://localhost:8000/login`,
       userInfo,
-      this.AUTH_OPTIONS
+      {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken'),
+        }
+      }
     );
   }
 

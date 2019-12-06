@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import API from '../../../helperScripts/api';
+import { POST } from '../../../helperScripts/ajax';
 
 class SigninForm extends Component {
   state = {
@@ -16,8 +16,8 @@ class SigninForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const userInfo = this.state;
-    API.signInUser(userInfo)
+
+    POST('/login', this.state)
     .then(res => console.log(res))
     .catch(err => console.log(err));
   };
@@ -29,11 +29,27 @@ class SigninForm extends Component {
         <form id="signin">
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input type="username" name="username" className="form-control" id="username" placeholder="Enter username" />
+            <input
+              type="username"
+              name="username"
+              className="form-control"
+              id="username"
+              placeholder="Enter username"
+              value={this.state.username}
+              onChange={this.handleChange}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" className="form-control" id="password" placeholder="Password" />
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              id="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
           </div>
           <div className="signinbtn">
             <button className="signin-btn btn btn-info float-right" type="submit">Submit</button>
