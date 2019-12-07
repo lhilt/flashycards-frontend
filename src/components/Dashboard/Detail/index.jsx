@@ -167,46 +167,48 @@ class Detail extends Component {
     const {cards, showFront } = this.state;
     const card = cards[this.state.currentCardIndex];
     return (
-      <Switch>
-        <Route path='/dashboard/card/create'>
-          <CreateCard
-            handleSubmit={this.handleCardCreateSubmit}
-          />
-        </Route>
-        <Route path='/dashboard/card/edit'>
-          <EditCard
-            handleSubmit={this.handleCardEditSubmit}
-            card={card}
-          />
-        </Route>
-        <Route path='/dashboard/deck/create'>
-          <CreateDeck
-            handleSubmit={this.props.handleDeckCreateSubmit}
-          />
-        </Route>
-        <Route path='/dashboard/deck/edit'>
-          <EditDeck
-            handleSubmit={this.props.handleDeckEditSubmit}
-            deck={this.props.selectedDeck}
-          />
-        </Route>
-        <Route exact path=''>
-          <div>
-            <Link
-              to='/dashboard/card/create'
-              className="btn btn-info add-card"
-            >
-              + Add a Card
-            </Link>
-            {cards.length > 0 &&
-              <Card
-                key={card.id}
-                text={showFront ? card.front : card.back}
-              />}
-            {this.displayCardDeleteModal()}
-          </div>
-        </Route>
-      </Switch>
+      <div className="detail">
+        <Switch>
+          <Route path='/dashboard/card/create'>
+            <CreateCard
+              handleSubmit={this.handleCardCreateSubmit}
+            />
+          </Route>
+          <Route path='/dashboard/card/edit'>
+            <EditCard
+              handleSubmit={this.handleCardEditSubmit}
+              card={card}
+            />
+          </Route>
+          <Route path='/dashboard/deck/create'>
+            <CreateDeck
+              handleSubmit={this.props.handleDeckCreateSubmit}
+            />
+          </Route>
+          <Route path='/dashboard/deck/edit'>
+            <EditDeck
+              handleSubmit={this.props.handleDeckEditSubmit}
+              deck={this.props.selectedDeck}
+            />
+          </Route>
+          <Route exact path=''>
+            <div>
+              <Link
+                to='/dashboard/card/create'
+                className="btn btn-info add-card"
+              >
+                + Add a Card
+              </Link>
+              {cards.length > 0 &&
+                <Card
+                  key={card.id}
+                  text={showFront ? card.front : card.back}
+                />}
+              {this.displayCardDeleteModal()}
+            </div>
+          </Route>
+        </Switch>
+      </div>
     );
   }
 }

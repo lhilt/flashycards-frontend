@@ -15,7 +15,7 @@ class CreateDeck extends Component {
   render() {
     const { name, description } = this.state;
     return (
-      <div className="jumbotron" id="create-deck-form">
+      <div className="jumbotron flash-form" id="create-deck-form">
         <h2>Create a Deck</h2>
         <form
           id="create-deck"

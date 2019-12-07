@@ -77,7 +77,9 @@ class Dashboard extends Component {
       .then((res) => {
         this.setState(prevState => ({
           decks: decks.filter(x => x !== deck),
-          selectedDeck: prevState.decks[prevState.decks.findIndex(d => d.id === deck.id) + 1],
+          selectedDeck: prevState.decks[
+            prevState.decks.findIndex(d => d.id === deck.id) + 1
+          ],
         }));
       })
       .catch(err => console.log(err));

@@ -15,7 +15,7 @@ class CreateCard extends Component {
   render() {
     const { front, back } = this.state;
     return (
-      <div className="jumbotron" id="create-card-form">
+      <div className="jumbotron flash-form" id="create-card-form">
         <h2>Create a Card</h2>
         <form
           id="create-card"

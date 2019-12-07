@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Deck from './Deck';
+import './Decklist.css';
 
 const Decklist = (props) => {
   const { decks, selectDeck, selectedDeckId } = props;

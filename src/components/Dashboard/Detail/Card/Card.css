@@ -1,5 +1,5 @@
 .flashcard {
-  width: 50vw;
+  width: 40vw;
   background: #f7f7f7;
   height: 400px;
   margin: 20px 10vw;
@@ -18,4 +18,15 @@
 
 .card-options-link:hover {
   cursor: pointer;
+}
+
+.card-text {
+  display: flex;
+  height: 75%;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-text p {
+  font-size: 50px;
 }

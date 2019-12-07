@@ -1,4 +1,5 @@
 .deck {
+  position: relative;
   height: 160px;
   background: #f7f7f7;
   width: 75%;
@@ -14,14 +15,25 @@
   background: #eaeaea;
 }
 
+.deck-options {
+  position: absolute;
+  top: 0;
+  right: 6px;
+}
+
 .deck-options-link {
   display: inline-block;
   color: #17a2b8;
-  margin: 4px 6px;
+  margin: 4px 4px;
 }
 
 .deck-options-link:hover {
   cursor: pointer;
   text-decoration: none;
   color: #17a2b8;
+}
+
+.deck-name {
+  position: absolute;
+  top: 40px;
 }

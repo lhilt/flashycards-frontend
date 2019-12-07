@@ -13,7 +13,7 @@ class Deck extends Component {
           <Link to="/dashboard/deck/edit" className="deck-options-link">edit</Link>
           <div className="deck-options-link" data-toggle="modal" data-target="#deleteDeckmodal">del</div>
         </div>
-        <p>{deck.name}</p>
+        <p className="deck-name">{deck.name}</p>
       </div>
     );
   }
