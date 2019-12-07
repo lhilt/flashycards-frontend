@@ -64,7 +64,7 @@ class Detail extends Component {
       this.prev();
     } else if (e.keyCode === 39) {
       this.next();
-    } else if (e.keyCode === 32) {
+    } else if (e.keyCode === 70) {
       this.setState(prevState => ({
         showFront: !prevState.showFront,
       }))
@@ -81,6 +81,7 @@ class Detail extends Component {
         this.setState({
           cards: this.state.cards.concat(newCard),
           showFront: true,
+          currentCardIndex: this.state.cards.length,
         })
       })
       .catch(err => console.log(err));
@@ -100,6 +101,7 @@ class Detail extends Component {
         updatedCards[currentCardIndex] = edited;
         this.setState({
           cards: updatedCards,
+          showFront: true,
         })
       })
       .catch(err => console.log(err));
@@ -116,6 +118,7 @@ class Detail extends Component {
       .then((res) => {
         this.setState({
           cards: cards.filter(x => x !== card),
+          currentCardIndex: this.state.currentCardIndex - 1,
         });
       })
       .catch(err => console.log(err));
@@ -164,7 +167,7 @@ class Detail extends Component {
   }
 
   render() {
-    const {cards, showFront } = this.state;
+    const { cards, currentCardIndex, showFront } = this.state;
     const card = cards[this.state.currentCardIndex];
     return (
       <div className="detail">
@@ -202,7 +205,10 @@ class Detail extends Component {
               {cards.length > 0 &&
                 <Card
                   key={card.id}
-                  text={showFront ? card.front : card.back}
+                  card={card}
+                  index={currentCardIndex}
+                  totalCards={cards.length}
+                  side={showFront ? 'front' : 'back'}
                 />}
               {this.displayCardDeleteModal()}
             </div>

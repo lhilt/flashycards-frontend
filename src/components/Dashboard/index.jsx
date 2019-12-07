@@ -125,9 +125,7 @@ class Dashboard extends Component {
         />
         <Detail
           selectedDeck={selectedDeck}
-          createDeck={this.state.createDeck}
           handleDeckCreateSubmit={this.handleDeckCreateSubmit}
-          editDeck={this.state.editDeck}
           handleDeckEditSubmit={this.handleDeckEditSubmit}
         />
         {this.displayDeckDeleteModal()}

@@ -5,7 +5,7 @@ import './Card.css';
 
 class Card extends Component {
   render() {
-    const { text } = this.props;
+    const { card, side, index, totalCards } = this.props;
     return (
       <div className="flashcard">
         <div className="card-options">
@@ -13,7 +13,11 @@ class Card extends Component {
           <div className="card-options-link" data-toggle="modal" data-target="#deletemodal">del</div>
         </div>
         <div className="card-text">
-          <p>{text}</p>
+          <p className={`${side}`}>{card[side]}</p>
+        </div>
+        <div className="card-info">
+          <span>{side}</span>
+          <span>{`${index+1}/${totalCards}`}</span>
         </div>
       </div>
     );
