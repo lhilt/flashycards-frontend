@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
 
 import { GET, POST, PUT, DELETE } from '../../../helperScripts/ajax';
 import Card from './Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
 import CreateDeck from '../Decklist/Forms/CreateDeck';
+import EditDeck from '../Decklist/Forms/EditDeck';
 import './Detail.css';
 
 class Detail extends Component {
@@ -12,9 +14,7 @@ class Detail extends Component {
     cards: [],
     currentCardIndex: 0,
     showFront: true,
-    createCard: false,
-    editCard: false,
-    ajaxLoaded: false,
+    // ajaxLoaded: false,
   };
 
   fetchCards = () => {
@@ -23,7 +23,7 @@ class Detail extends Component {
       .then(res => {
         this.setState({
           cards: res.data.cards,
-          ajaxLoaded: true,
+          // ajaxLoaded: true,
         });
       })
       .catch(err => console.log(err));
@@ -71,12 +71,6 @@ class Detail extends Component {
     }
   };
 
-  toggleCreateCard = () => {
-    this.setState(prevState => ({
-      createCard: !prevState.createCard,
-    }));
-  };
-
   handleCardCreateSubmit = (e, newCard) => {
     e.preventDefault();
     const deckPk = this.props.selectedDeck.id;
@@ -91,13 +85,7 @@ class Detail extends Component {
       })
       .catch(err => console.log(err));
 
-    this.toggleCreateCard();
-  };
-
-  toggleEditCard = () => {
-    this.setState(prevState => ({
-      editCard: !prevState.editCard,
-    }));
+      this.props.history.goBack();
   };
 
   handleCardEditSubmit = (e, updated) => {
@@ -116,7 +104,7 @@ class Detail extends Component {
       })
       .catch(err => console.log(err));
 
-    this.toggleEditCard();
+    this.props.history.goBack();
   };
 
   handleDeleteSubmit = (card) => {
@@ -133,7 +121,7 @@ class Detail extends Component {
       .catch(err => console.log(err));
   };
 
-  displayDeleteModal = () => {
+  displayCardDeleteModal = () => {
     const card = this.state.cards[this.state.currentCardIndex];
     return (
       <div className="modal fade" id="deletemodal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -158,56 +146,6 @@ class Detail extends Component {
     );
   };
 
-  chooseComponentToDisplay = () => {
-    const {cards, showFront, ajaxLoaded } = this.state;
-    const { createCard, editCard } = this.state;
-    const { createDeck } = this.props;
-    const card = cards[this.state.currentCardIndex];
-    if (createCard) {
-      return (
-        <CreateCard
-          toggleCreateCard={this.toggleCreateCard}
-          handleSubmit={this.handleCardCreateSubmit}
-        />
-      );
-    } else if (editCard) {
-      return (
-        <EditCard
-          toggleEditCard={this.toggleEditCard}
-          handleSubmit={this.handleCardEditSubmit}
-          card={card}
-        />
-      );
-    } else if (createDeck) {
-      return (
-        <CreateDeck
-          toggleCreateDeck={this.props.toggleCreateDeck}
-          handleSubmit={this.props.handleDeckCreateSubmit}
-        />
-      );
-    } else if (ajaxLoaded) {
-      return (
-        <div>
-          <button
-            className="btn btn-info add-card"
-            onClick={this.toggleCreateCard}
-          >
-            + Add a Card
-          </button>
-          {cards.length > 0 &&
-            <Card
-              key={card.id}
-              text={showFront ? card.front : card.back}
-              toggleEditCard={this.toggleEditCard}
-            />}
-          {this.displayDeleteModal()}
-        </div>
-      )
-    } else {
-      return null;
-    }
-  };
-
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp);
     if (this.props.selectedDeck) {
@@ -226,12 +164,51 @@ class Detail extends Component {
   }
 
   render() {
+    const {cards, showFront } = this.state;
+    const card = cards[this.state.currentCardIndex];
     return (
-      <div>
-        {this.chooseComponentToDisplay()}
-      </div>
+      <Switch>
+        <Route path='/dashboard/card/create'>
+          <CreateCard
+            handleSubmit={this.handleCardCreateSubmit}
+          />
+        </Route>
+        <Route path='/dashboard/card/edit'>
+          <EditCard
+            handleSubmit={this.handleCardEditSubmit}
+            card={card}
+          />
+        </Route>
+        <Route path='/dashboard/deck/create'>
+          <CreateDeck
+            handleSubmit={this.props.handleDeckCreateSubmit}
+          />
+        </Route>
+        <Route path='/dashboard/deck/edit'>
+          <EditDeck
+            handleSubmit={this.props.handleDeckEditSubmit}
+            deck={this.props.selectedDeck}
+          />
+        </Route>
+        <Route exact path=''>
+          <div>
+            <Link
+              to='/dashboard/card/create'
+              className="btn btn-info add-card"
+            >
+              + Add a Card
+            </Link>
+            {cards.length > 0 &&
+              <Card
+                key={card.id}
+                text={showFront ? card.front : card.back}
+              />}
+            {this.displayCardDeleteModal()}
+          </div>
+        </Route>
+      </Switch>
     );
   }
 }
 
-export default Detail;
+export default withRouter(Detail);

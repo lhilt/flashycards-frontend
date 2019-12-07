@@ -3,7 +3,7 @@
   background: #f7f7f7;
   width: 75%;
   margin: 40px 20px;
-  padding: 20px;
+  padding: 10px;
   border: 5px solid transparent;
   border-radius: 5px;
   box-shadow: 3px 11px 20px -4px rgba(0, 0, 0, 0.34);
@@ -12,4 +12,16 @@
 .highlight {
   border: 5px solid #a0e8f3;
   background: #eaeaea;
+}
+
+.deck-options-link {
+  display: inline-block;
+  color: #17a2b8;
+  margin: 4px 6px;
+}
+
+.deck-options-link:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: #17a2b8;
 }

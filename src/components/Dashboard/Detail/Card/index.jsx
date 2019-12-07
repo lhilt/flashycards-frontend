@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Card.css';
 
 class Card extends Component {
   render() {
-    const { text, toggleEditCard } = this.props;
+    const { text } = this.props;
     return (
       <div className="flashcard">
         <div className="card-options">
-          <div className="card-options-link" onClick={toggleEditCard}>edit</div>
+          <Link to="/dashboard/card/edit" className="card-options-link">edit</Link>
           <div className="card-options-link" data-toggle="modal" data-target="#deletemodal">del</div>
         </div>
         <h3>{text}</h3>

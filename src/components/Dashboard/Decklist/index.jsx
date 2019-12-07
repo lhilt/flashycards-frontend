@@ -1,15 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Deck from './Deck';
 
-const Decklist = ({ decks, selectDeck, selectedDeckId, toggleCreateDeck }) => (
+const Decklist = (props) => {
+  const { decks, selectDeck, selectedDeckId } = props;
+  return (
   <section className="decklist">
-    <button
+    <Link
+      to="/dashboard/deck/create"
       className="btn btn-info add-deck"
-      onClick={toggleCreateDeck}
     >
       + Add a Deck
-    </button>
+    </Link>
     {decks.map(deck => (
       <Deck
         key={deck.id}
@@ -19,6 +22,6 @@ const Decklist = ({ decks, selectDeck, selectedDeckId, toggleCreateDeck }) => (
       />
     ))}
   </section>
-);
+)};
 
 export default Decklist;
