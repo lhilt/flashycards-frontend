@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 
 import { GET, POST, PUT, DELETE } from '../../helperScripts/ajax';
 import Decklist from './Decklist';
@@ -29,7 +29,6 @@ class Dashboard extends Component {
     });
   };
 
-  // edit, delete, create deck methods
   handleDeckCreateSubmit = (e, newDeck) => {
     e.preventDefault();
     POST(`/api/v1/decks/new`, newDeck)
@@ -115,19 +114,25 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { selectedDeck } = this.state;
+    const { selectedDeck, decks } = this.state;
+    const path = this.props.match.path;
     return (
       <main className="dashboard">
         <Decklist
-          decks={this.state.decks}
+          decks={decks}
           selectedDeckId={selectedDeck && selectedDeck.id}
           selectDeck={this.selectDeck}
         />
-        <Detail
-          selectedDeck={selectedDeck}
-          handleDeckCreateSubmit={this.handleDeckCreateSubmit}
-          handleDeckEditSubmit={this.handleDeckEditSubmit}
-        />
+        <Switch>
+          <Route path={`${path}/decks/:deckId`}>
+            <Detail
+              selectedDeck={selectedDeck}
+              deckIndex={decks.findIndex(d => d.id === selectedDeck.id)}
+              handleDeckCreateSubmit={this.handleDeckCreateSubmit}
+              handleDeckEditSubmit={this.handleDeckEditSubmit}
+            />
+          </Route>
+        </Switch>
         {this.displayDeckDeleteModal()}
       </main>
     );

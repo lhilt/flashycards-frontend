@@ -23,11 +23,16 @@ class Detail extends Component {
       .then(res => {
         this.setState({
           cards: res.data.cards,
-          // ajaxLoaded: true,
         });
       })
       .catch(err => console.log(err));
   };
+
+  flip = () => {
+    this.setState(prevState => ({
+      showFront: !prevState.showFront,
+    }));
+  }
 
   next = () => {
     const { cards, currentCardIndex } = this.state;
@@ -168,52 +173,70 @@ class Detail extends Component {
 
   render() {
     const { cards, currentCardIndex, showFront } = this.state;
-    const card = cards[this.state.currentCardIndex];
+    const card = cards[currentCardIndex];
+    const { selectedDeck } = this.props;
+    const path = this.props.match.path;
+    const url = this.props.match.url
+
     return (
       <div className="detail">
         <Switch>
-          <Route path='/dashboard/card/create'>
+          <Route path={`${path}/cards/create`}>
             <CreateCard
               handleSubmit={this.handleCardCreateSubmit}
             />
           </Route>
-          <Route path='/dashboard/card/edit'>
+          <Route path={`${path}/card/edit`}>
             <EditCard
               handleSubmit={this.handleCardEditSubmit}
               card={card}
             />
           </Route>
-          <Route path='/dashboard/deck/create'>
+          <Route path={`/dashboard/decks/create`}>
             <CreateDeck
               handleSubmit={this.props.handleDeckCreateSubmit}
             />
           </Route>
-          <Route path='/dashboard/deck/edit'>
+          <Route path={`${path}/deck/edit`}>
             <EditDeck
               handleSubmit={this.props.handleDeckEditSubmit}
-              deck={this.props.selectedDeck}
+              deck={selectedDeck}
             />
           </Route>
           <Route exact path=''>
             <div>
               <Link
-                to='/dashboard/card/create'
+                to={`${url}/cards/create`}
                 className="btn btn-info add-card"
               >
                 + Add a Card
               </Link>
               {cards.length > 0 &&
+                <>
                 <Card
                   key={card.id}
                   card={card}
                   index={currentCardIndex}
                   totalCards={cards.length}
                   side={showFront ? 'front' : 'back'}
-                />}
+                />
+                <div className="card-btn-group">
+                  <span onClick={this.prev}>&lsaquo;</span>
+                  <span onClick={this.flip}>flip</span>
+                  <span onClick={this.next}>&rsaquo;</span>
+                </div>
+                </>
+              }
               {this.displayCardDeleteModal()}
             </div>
           </Route>
         </Switch>
+        {selectedDeck &&
+          <div className="deck-info">
+            <h3>{selectedDeck.name}</h3>
+            <p>{selectedDeck.description}</p>
+          </div>
+        }
       </div>
     );
   }

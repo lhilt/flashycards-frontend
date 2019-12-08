@@ -6,3 +6,23 @@
 .flash-form {
   margin: 40px;
 }
+
+.card-btn-group {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 800;
+}
+
+.card-btn-group span {
+  padding: 0 20px;
+}
+
+.card-btn-group span:hover {
+  cursor: pointer;
+}
+
+.deck-info {
+  padding: 40px 30px;
+  color: #17a2b8;
+  max-width: 650px;
+}

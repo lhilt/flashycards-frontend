@@ -12,7 +12,7 @@ export default (props) => (
         setCurrentUser={props.setCurrentUser}
       />
     </Route>
-    <Route path='/:username'>
+    <Route path='/dashboard'>
       <Dashboard />
     </Route>
   </Switch>
