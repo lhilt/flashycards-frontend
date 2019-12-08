@@ -6,7 +6,7 @@ import './Decklist.css';
 
 const Decklist = (props) => {
   const { decks, selectDeck, selectedDeckId } = props;
-  const { url, path } = useRouteMatch();
+  // const { url, path } = useRouteMatch();
   return (
   <section className="decklist">
     <Link
@@ -16,13 +16,12 @@ const Decklist = (props) => {
       + Add a Deck
     </Link>
     {decks.map(deck => (
-      <Link to={`${url}/decks/${deck.id}`} key={deck.id}>
-        <Deck
-          deck={deck}
-          selectDeck={selectDeck}
-          highlight={selectedDeckId === deck.id}
-        />
-      </Link>
+      <Deck
+        key={deck.id}
+        deck={deck}
+        selectDeck={selectDeck}
+        highlight={selectedDeckId === deck.id}
+      />
     ))}
   </section>
 )};

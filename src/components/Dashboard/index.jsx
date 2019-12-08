@@ -27,6 +27,7 @@ class Dashboard extends Component {
     this.setState({
       selectedDeck: deck,
     });
+    this.props.history.push(`/dashboard/decks/${deck.id}`);
   };
 
   handleDeckCreateSubmit = (e, newDeck) => {
