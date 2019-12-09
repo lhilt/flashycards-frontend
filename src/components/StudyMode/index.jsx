@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { GET } from '../../helperScripts/ajax';
 import Card from '../Dashboard/Card';
+import CardButtonGroup from '../Dashboard/Card/CardButtonGroup';
 import DeckInfo from '../Dashboard/DeckInfo';
 import LinkToDashboard from '../ModeLinks/LinkToDashboard';
 import './StudyMode.css';
@@ -113,15 +114,24 @@ class StudyMode extends Component {
     return (
       <div className="study-mode">
         <LinkToDashboard deckId={this.props.match.params.deckId} />
-        {card && <Card
-          key={card.id}
-          card={card}
-          studyMode={true}
-          markWrong={this.markWrong}
-          index={currentCardIndex}
-          totalCards={cards.length}
-          side={showFront ? 'front' : 'back'}
-        />}
+        {card &&
+          <>
+          <Card
+            key={card.id}
+            card={card}
+            studyMode={true}
+            markWrong={this.markWrong}
+            index={currentCardIndex}
+            totalCards={cards.length}
+            side={showFront ? 'front' : 'back'}
+          />
+          <CardButtonGroup
+            next={this.next}
+            prev={this.prev}
+            flip={this.flip}
+          />
+          </>
+        }
         <DeckInfo selectedDeck={selectedDeck} />
       </div>
     );

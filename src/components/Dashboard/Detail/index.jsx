@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { GET, POST, PUT, DELETE } from '../../../helperScripts/ajax';
 import Card from '../Card';
+import CardButtonGroup from '../Card/CardButtonGroup';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
 import AddCardButton from './AddCard';
@@ -221,11 +222,11 @@ class Detail extends Component {
                 side={showFront ? 'front' : 'back'}
                 toggleEditForm={this.toggleEditForm}
               />
-              <div className="card-btn-group">
-                <span onClick={this.prev}>&lsaquo;</span>
-                <span onClick={this.flip}>flip</span>
-                <span onClick={this.next}>&rsaquo;</span>
-              </div>
+              <CardButtonGroup
+                next={this.next}
+                prev={this.prev}
+                flip={this.flip}
+              />
               </>
             }
             {this.displayCardDeleteModal()}
