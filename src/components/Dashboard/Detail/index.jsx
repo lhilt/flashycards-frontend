@@ -179,7 +179,7 @@ class Detail extends Component {
     const card = cards[currentCardIndex];
     const { selectedDeck } = this.props;
     const path = this.props.match.path;
-    const url = this.props.match.url
+    const url = this.props.match.url;
 
     return (
       <div className="detail">

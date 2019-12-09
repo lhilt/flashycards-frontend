@@ -7,7 +7,6 @@ import StudyMode from '../StudyMode';
 
 class DeckInfoContainer extends Component {
   state = {
-    selectedDeck: null,
     decks: [],
     ajaxLoaded: false,
   };
@@ -43,16 +42,15 @@ class DeckInfoContainer extends Component {
       this.props.history.goBack();
   };
 
-  handleDeckEditSubmit = (e, edited) => {
-    e.preventDefault();
-    const { decks, selectedDeck } = this.state;
+  handleDeckEditSubmit = (edited) => {
+    const { decks } = this.state;
 
-    const deckPk = selectedDeck.id;
-    PUT(`/api/v1/decks/${deckPk}/edit`, edited)
+    const deckId = edited.id;
+    PUT(`/api/v1/decks/${deckId}/edit`, edited)
       .then(res => {
         const updated = res.data.deck;
         const updatedDecks = decks.map((deck, i) => {
-          if (i === decks.findIndex(x => x.id === selectedDeck.id)) {
+          if (i === decks.findIndex(x => x.id === deckId)) {
             return updated;
           } else {
             return deck;
@@ -63,8 +61,6 @@ class DeckInfoContainer extends Component {
         })
       })
       .catch(err => console.log(err));
-
-    this.props.history.goBack();
   };
 
   handleDeleteSubmit = (deck) => {
@@ -107,6 +103,8 @@ class DeckInfoContainer extends Component {
           <Dashboard
             decks={decks}
             selectDeck={this.selectDeck}
+            handleDeckCreateSubmit={this.handleDeckCreateSubmit}
+            handleDeckEditSubmit={this.handleDeckEditSubmit}
           />
         </Route>
         <Route path='/study'>

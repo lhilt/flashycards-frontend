@@ -12,43 +12,70 @@ class EditDeck extends Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.handleSubmit({...this.state, id: this.props.deck.id});
+  }
+
   render() {
     const { name, description } = this.state;
     return (
-      <div className="jumbotron flash-form" id="create-deck-form">
-        <h2>Edit Your Deck</h2>
-        <form
-          id="create-deck"
-          onSubmit={(e) => this.props.handleSubmit(e, this.state)}
-        >
-          <div className="form-group">
-            <label htmlFor="name">Name of Your Deck</label>
-            <textarea
-              type="text"
-              name="name"
-              id="name"
-              className="form-control"
-              placeholder="Name your deck"
-              value={name}
-              onChange={this.handleChange}
-            ></textarea>
+      <div
+        className="modal fade"
+        id={`editDeck${this.props.deck.id}`}
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="Edit post form"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+          <div className="modal-header">
+              Edit your deck
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form
+                id="create-deck"
+              >
+                <div className="form-group">
+                  <label htmlFor="name">Name of Your Deck</label>
+                  <textarea
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="form-control"
+                    placeholder="Name your deck"
+                    value={name}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    type="text"
+                    name="description"
+                    id="description"
+                    className="form-control"
+                    placeholder="Describe it here"
+                    value={description}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
+                <div className="">
+                  <button
+                    className="btn btn-info float-right"
+                    type="submit"
+                    data-dismiss="modal"
+                    onClick={this.handleSubmit}
+                  >Submit</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea
-              type="text"
-              name="description"
-              id="description"
-              className="form-control"
-              placeholder="Describe it here"
-              value={description}
-              onChange={this.handleChange}
-            ></textarea>
-          </div>
-          <div className="">
-            <button className="btn btn-info float-right" type="submit">Submit</button>
-          </div>
-        </form>
+        </div>
       </div>
     );
   }

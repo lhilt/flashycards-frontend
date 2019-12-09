@@ -48,12 +48,12 @@ class Dashboard extends Component {
           decks={decks}
           selectedDeckId={selectedDeck && selectedDeck.id}
           selectDeck={selectDeck}
+          handleDeckCreateSubmit={this.props.handleDeckCreateSubmit}
+          handleDeckEditSubmit={this.props.handleDeckEditSubmit}
         />
         <Detail
           selectedDeck={selectedDeck}
           deckIndex={decks.findIndex(d => d.id === selectedDeck.id)}
-          handleDeckCreateSubmit={this.handleDeckCreateSubmit}
-          handleDeckEditSubmit={this.handleDeckEditSubmit}
         />
         {this.displayDeckDeleteModal()}
       </main>

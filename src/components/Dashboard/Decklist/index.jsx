@@ -21,6 +21,8 @@ const Decklist = (props) => {
         deck={deck}
         selectDeck={selectDeck}
         highlight={selectedDeckId === deck.id}
+        handleDeckCreateSubmit={props.handleDeckCreateSubmit}
+        handleDeckEditSubmit={props.handleDeckEditSubmit}
       />
     ))}
   </section>
