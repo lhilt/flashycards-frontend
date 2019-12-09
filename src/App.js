@@ -45,6 +45,7 @@ class App extends Component {
         />
         <MainRoutes
           signup={this.state.signupForm}
+          currentUsername={this.state.currentUsername}
           setCurrentUser={this.setCurrentUser}
         />
       </div>

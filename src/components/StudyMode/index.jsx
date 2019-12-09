@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { GET } from '../../../helperScripts/ajax';
-import Card from '../Card';
-import DeckInfo from '../DeckInfo';
+import { GET } from '../../helperScripts/ajax';
+import Card from '../Dashboard/Card';
+import DeckInfo from '../Dashboard/DeckInfo';
 
 class StudyMode extends Component {
   state = {
