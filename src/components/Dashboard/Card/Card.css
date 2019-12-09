@@ -2,9 +2,13 @@
   width: 500px;
   background: #f7f7f7;
   height: 400px;
-  margin: 20px 10vw;
+  margin: 0 10vw;
   border-radius: 4px;
   box-shadow: 3px 11px 20px -4px rgba(0, 0, 0, 0.34);
+}
+
+.study-card {
+  margin: 75px auto 25px auto;
 }
 
 .card-options {

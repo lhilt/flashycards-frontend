@@ -83,7 +83,7 @@ class DeckInfoContainer extends Component {
   }
 
   render() {
-    const { selectedDeck, decks, ajaxLoaded } = this.state;
+    const { decks, ajaxLoaded } = this.state;
 
     if (!ajaxLoaded) {
       return null;
@@ -106,10 +106,9 @@ class DeckInfoContainer extends Component {
             handleDeckDeleteSubmit={this.handleDeckDeleteSubmit}
           />
         </Route>
-        <Route path='/study'>
-          <StudyMode
-            selectedDeck={selectedDeck}
-          />
+        <Redirect exact from='/study' to={`/study/decks/${deckId}`} />
+        <Route path='/study/decks/:deckId'>
+          <StudyMode decks={decks}/>
         </Route>
       </Switch>
     );

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { GET } from '../../helperScripts/ajax';
 import Card from '../Dashboard/Card';
 import DeckInfo from '../Dashboard/DeckInfo';
+import './StudyMode.css';
 
 class StudyMode extends Component {
   state = {
@@ -12,9 +14,15 @@ class StudyMode extends Component {
     showFront: true,
   };
 
+  findSelectedDeck = () => {
+    const { deckId } = this.props.match.params;
+    const selected = this.props.decks.find(deck => deck.id == deckId);
+    return selected;
+  }
+
   fetchCards = () => {
-    const deckPk = this.props.selectedDeck.id;
-    GET(`/api/v1/decks/${deckPk}/cards`)
+    const { deckId } = this.props.match.params;
+    GET(`/api/v1/decks/${deckId}/cards`)
       .then(res => {
         this.setState({
           cards: res.data.cards,
@@ -79,9 +87,7 @@ class StudyMode extends Component {
 
   componentDidMount = () => {
     window.addEventListener('keyup', this.handleKeyUp);
-    if (this.props.selectedDeck) {
-      this.fetchCards();
-    }
+    this.fetchCards();
   }
 
   componentDidUpdate(prevProps) {
@@ -95,9 +101,14 @@ class StudyMode extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.handleKeyUp);
+  }
+
   render() {
     const { currentCardIndex, cards, showFront } = this.state;
     const card = cards[currentCardIndex];
+    const selectedDeck = this.findSelectedDeck();
     return (
       <div className="study-mode">
         {card && <Card
@@ -109,10 +120,10 @@ class StudyMode extends Component {
           totalCards={cards.length}
           side={showFront ? 'front' : 'back'}
         />}
-        <DeckInfo selectedDeck={this.props.selectedDeck} />
+        <DeckInfo selectedDeck={selectedDeck} />
       </div>
     );
   }
 }
 
-export default StudyMode;
+export default withRouter(StudyMode);

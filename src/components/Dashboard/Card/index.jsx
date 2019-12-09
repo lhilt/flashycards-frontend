@@ -6,10 +6,10 @@ import './Card.css';
 
 class Card extends Component {
   render() {
-    const { card, side, index, totalCards } = this.props;
+    const { card, side, index, totalCards, studyMode } = this.props;
     return (
-      <div className="flashcard">
-        {this.props.studyMode
+      <div className={`flashcard ${studyMode ? 'study-card' : ''}`}>
+        {studyMode
           ?
           <CardStudyOptions markWrong={this.props.markWrong} />
           :
