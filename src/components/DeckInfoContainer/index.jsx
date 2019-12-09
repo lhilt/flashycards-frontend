@@ -63,19 +63,18 @@ class DeckInfoContainer extends Component {
       .catch(err => console.log(err));
   };
 
-  handleDeleteSubmit = (deck) => {
+  handleDeckDeleteSubmit = (deck) => {
     const { decks } = this.state;
-    const deckPk = deck.id;
+    const deckId = deck.id;
+    const newDeckId = decks.findIndex(d => d.id === deck.id) + 1;
 
     setTimeout(1000);
-    DELETE(`/api/v1/decks/${deckPk}/delete`)
-      .then((res) => {
+    DELETE(`/api/v1/decks/${deckId}/delete`)
+      .then(() => {
         this.setState(prevState => ({
           decks: decks.filter(x => x !== deck),
-          selectedDeck: prevState.decks[
-            prevState.decks.findIndex(d => d.id === deck.id) + 1
-          ],
         }));
+        this.props.history.push(`/dashboard/decks/${newDeckId}`)
       })
       .catch(err => console.log(err));
   };
@@ -93,7 +92,7 @@ class DeckInfoContainer extends Component {
     if (decks.length === 0) {
       return null;
     }
-    const deckId = decks[0].id
+    const deckId = decks[0].id;
 
     return (
       <Switch>
@@ -105,6 +104,7 @@ class DeckInfoContainer extends Component {
             selectDeck={this.selectDeck}
             handleDeckCreateSubmit={this.handleDeckCreateSubmit}
             handleDeckEditSubmit={this.handleDeckEditSubmit}
+            handleDeckDeleteSubmit={this.handleDeckDeleteSubmit}
           />
         </Route>
         <Route path='/study'>

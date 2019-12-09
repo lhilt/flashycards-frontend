@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import EditDeck from '../Forms/EditDeck';
+import DeleteDeck from '../Forms/DeleteDeck';
 import './Deck.css';
 
 class Deck extends Component {
@@ -23,9 +24,10 @@ class Deck extends Component {
       <div className={`deck ${highlightClass}`} onClick={this.onClick}>
         <div className="deck-options">
           <div className="deck-options-link" data-toggle="modal" data-target={`#editDeck${deck.id}`}>edit</div>
-          <div className="deck-options-link" data-toggle="modal" data-target="#deleteDeckmodal">del</div>
+          <div className="deck-options-link" data-toggle="modal" data-target={`#deleteDeck${deck.id}`}>del</div>
         </div>
         <EditDeck deck={deck} handleSubmit={this.props.handleDeckEditSubmit} />
+        <DeleteDeck deck={deck} handleSubmit={this.props.handleDeckDeleteSubmit} />
         <p className="deck-name">{deck.name}</p>
       </div>
     );
