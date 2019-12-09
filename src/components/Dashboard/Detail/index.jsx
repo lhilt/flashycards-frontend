@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { GET, POST, PUT, DELETE } from '../../../helperScripts/ajax';
 import Card from '../Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
 import AddCardButton from './AddCard';
+import LinkToStudyMode from '../../ModeLinks/LinkToStudyMode';
 import DeckInfo from '../DeckInfo';
-import CreateDeck from '../Decklist/Forms/CreateDeck';
-import EditDeck from '../Decklist/Forms/EditDeck';
 import './Detail.css';
 
 const cardStates = {
@@ -207,8 +206,11 @@ class Detail extends Component {
     switch (this.state.cardState) {
       case 'view':
         view = (
-          <div>
-            <AddCardButton toggleCreateForm={this.toggleCreateForm}/>
+          <div className="detail">
+            <div className="detail-btn-group">
+              <AddCardButton toggleCreateForm={this.toggleCreateForm}/>
+              <LinkToStudyMode deckId={selectedDeck.id} />
+            </div>
             {cards.length > 0 &&
               <>
               <Card

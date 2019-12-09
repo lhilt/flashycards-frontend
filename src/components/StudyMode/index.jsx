@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { GET } from '../../helperScripts/ajax';
 import Card from '../Dashboard/Card';
 import DeckInfo from '../Dashboard/DeckInfo';
+import LinkToDashboard from '../ModeLinks/LinkToDashboard';
 import './StudyMode.css';
 
 class StudyMode extends Component {
@@ -111,6 +112,7 @@ class StudyMode extends Component {
     const selectedDeck = this.findSelectedDeck();
     return (
       <div className="study-mode">
+        <LinkToDashboard deckId={this.props.match.params.deckId} />
         {card && <Card
           key={card.id}
           card={card}
