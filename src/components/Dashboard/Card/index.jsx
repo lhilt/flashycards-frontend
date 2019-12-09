@@ -13,7 +13,7 @@ class Card extends Component {
           ?
           <CardStudyOptions markWrong={this.props.markWrong} />
           :
-          <CardOptions />}
+          <CardOptions toggleEditForm={this.props.toggleEditForm} />}
         <div className="card-text">
           <p className={`${side}`}>{card[side]}</p>
         </div>

@@ -1,15 +1,14 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-const AddCard = (props) => {
-  const url = props.match.url;
+const AddCard = ({ toggleCreateForm }) => {
   return (
-    <Link
-      to={`${url}/cards/create`}
+    <div
+      onClick={toggleCreateForm}
       className="btn btn-info add-card"
     >
       + Add a Card
-    </Link>
+    </div>
   );
 };
 

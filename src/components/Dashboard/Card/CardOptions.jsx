@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const CardOptions = () => {
+const CardOptions = ({ toggleEditForm }) => {
   return (
     <div className="card-options">
-      <Link to="/dashboard/card/edit" className="card-options-link">edit</Link>
+      <div onClick={toggleEditForm} className="card-options-link">edit</div>
       <div className="card-options-link" data-toggle="modal" data-target="#deletemodal">del</div>
     </div>
   );

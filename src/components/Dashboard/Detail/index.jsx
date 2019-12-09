@@ -31,6 +31,12 @@ class Detail extends Component {
     });
   };
 
+  toggleCreateForm = () => {
+    this.setState({
+      cardState: cardStates.create,
+    })
+  };
+
   fetchCards = () => {
     const deckPk = this.props.selectedDeck.id;
     GET(`/api/v1/decks/${deckPk}/cards`)
@@ -106,7 +112,7 @@ class Detail extends Component {
       })
       .catch(err => console.log(err));
 
-      this.props.history.goBack();
+      // this.props.history.goBack();
   };
 
   handleCardEditSubmit = (e, updated) => {
@@ -127,7 +133,7 @@ class Detail extends Component {
       })
       .catch(err => console.log(err));
 
-    this.props.history.goBack();
+    // this.props.history.goBack();
   };
 
   handleDeleteSubmit = (card) => {
@@ -188,19 +194,21 @@ class Detail extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.handleKeyUp);
+  }
+
   render() {
     const { cards, currentCardIndex, showFront } = this.state;
     const card = cards[currentCardIndex];
     const { selectedDeck } = this.props;
-    const path = this.props.match.path;
-    const url = this.props.match.url;
 
     let view;
     switch (this.state.cardState) {
       case 'view':
         view = (
           <div>
-            <AddCardButton />
+            <AddCardButton toggleCreateForm={this.toggleCreateForm}/>
             {cards.length > 0 &&
               <>
               <Card
@@ -209,6 +217,7 @@ class Detail extends Component {
                 index={currentCardIndex}
                 totalCards={cards.length}
                 side={showFront ? 'front' : 'back'}
+                toggleEditForm={this.toggleEditForm}
               />
               <div className="card-btn-group">
                 <span onClick={this.prev}>&lsaquo;</span>
