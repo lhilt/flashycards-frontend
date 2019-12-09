@@ -11,12 +11,24 @@ import CreateDeck from '../Decklist/Forms/CreateDeck';
 import EditDeck from '../Decklist/Forms/EditDeck';
 import './Detail.css';
 
+const cardStates = {
+  view: 'view',
+  edit: 'edit',
+  create: 'create',
+};
+
 class Detail extends Component {
   state = {
     cards: [],
     currentCardIndex: 0,
     showFront: true,
-    // ajaxLoaded: false,
+    cardState: cardStates.view,
+  };
+
+  toggleEditForm = () => {
+    this.setState({
+      cardState: cardStates.edit,
+    });
   };
 
   fetchCards = () => {
@@ -89,6 +101,7 @@ class Detail extends Component {
           cards: this.state.cards.concat(newCard),
           showFront: true,
           currentCardIndex: this.state.cards.length,
+          cardState: cardStates.view,
         })
       })
       .catch(err => console.log(err));
@@ -109,6 +122,7 @@ class Detail extends Component {
         this.setState({
           cards: updatedCards,
           showFront: true,
+          cardState: cardStates.view,
         })
       })
       .catch(err => console.log(err));
@@ -181,9 +195,53 @@ class Detail extends Component {
     const path = this.props.match.path;
     const url = this.props.match.url;
 
+    let view;
+    switch (this.state.cardState) {
+      case 'view':
+        view = (
+          <div>
+            <AddCardButton />
+            {cards.length > 0 &&
+              <>
+              <Card
+                key={card.id}
+                card={card}
+                index={currentCardIndex}
+                totalCards={cards.length}
+                side={showFront ? 'front' : 'back'}
+              />
+              <div className="card-btn-group">
+                <span onClick={this.prev}>&lsaquo;</span>
+                <span onClick={this.flip}>flip</span>
+                <span onClick={this.next}>&rsaquo;</span>
+              </div>
+              </>
+            }
+            {this.displayCardDeleteModal()}
+          </div>
+        );
+        break;
+      case 'edit':
+        view = (
+          <EditCard
+            handleSubmit={this.handleCardEditSubmit}
+            card={card}
+          />
+        );
+        break;
+      case 'create':
+        view = (
+          <CreateCard
+            handleSubmit={this.handleCardCreateSubmit}
+          />
+        );
+        break;
+    }
+
     return (
       <div className="detail">
-        <Switch>
+        {view}
+        {/* <Switch>
           <Route path={`${path}/cards/create`}>
             <CreateCard
               handleSubmit={this.handleCardCreateSubmit}
@@ -228,7 +286,7 @@ class Detail extends Component {
               {this.displayCardDeleteModal()}
             </div>
           </Route>
-        </Switch>
+        </Switch> */}
         {selectedDeck &&
           <DeckInfo selectedDeck={selectedDeck} />
         }

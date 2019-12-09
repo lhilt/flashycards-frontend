@@ -15,7 +15,6 @@ class Dashboard extends Component {
 
   render() {
     const { decks, selectDeck } = this.props;
-    const { path } = this.props.match;
     const selectedDeck = this.findSelectedDeck();
     return (
       <main className="dashboard">
@@ -29,7 +28,6 @@ class Dashboard extends Component {
         />
         <Detail
           selectedDeck={selectedDeck}
-          deckIndex={decks.findIndex(d => d.id === selectedDeck.id)}
         />
       </main>
     );

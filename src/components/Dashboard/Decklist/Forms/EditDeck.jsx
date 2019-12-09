@@ -25,7 +25,7 @@ class EditDeck extends Component {
         id={`editDeck${this.props.deck.id}`}
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="Edit post form"
+        aria-labelledby="Edit deck form"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">

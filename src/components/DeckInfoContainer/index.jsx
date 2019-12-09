@@ -28,8 +28,7 @@ class DeckInfoContainer extends Component {
     });
   };
 
-  handleDeckCreateSubmit = (e, newDeck) => {
-    e.preventDefault();
+  handleDeckCreateSubmit = (newDeck) => {
     POST(`/api/v1/decks/new`, newDeck)
       .then(res => {
         const newDeck = res.data.deck;
@@ -39,7 +38,7 @@ class DeckInfoContainer extends Component {
       })
       .catch(err => console.log(err));
 
-      this.props.history.goBack();
+      // this.props.history.goBack();
   };
 
   handleDeckEditSubmit = (edited) => {
