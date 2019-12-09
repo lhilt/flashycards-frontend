@@ -1,5 +1,5 @@
 .decklist {
-  width: 25vw;
+  min-width: 25vw;
   height: 100%;
   overflow-y: scroll;
   background: rgba(106, 106, 106, 0.6);

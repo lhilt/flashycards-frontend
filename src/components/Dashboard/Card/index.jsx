@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
+import CardOptions from './CardOptions';
+import CardStudyOptions from './CardStudyOptions';
 import './Card.css';
 
 class Card extends Component {
@@ -8,10 +9,11 @@ class Card extends Component {
     const { card, side, index, totalCards } = this.props;
     return (
       <div className="flashcard">
-        <div className="card-options">
-          <Link to="/dashboard/card/edit" className="card-options-link">edit</Link>
-          <div className="card-options-link" data-toggle="modal" data-target="#deletemodal">del</div>
-        </div>
+        {this.props.studyMode
+          ?
+          <CardStudyOptions markWrong={this.props.markWrong} />
+          :
+          <CardOptions />}
         <div className="card-text">
           <p className={`${side}`}>{card[side]}</p>
         </div>

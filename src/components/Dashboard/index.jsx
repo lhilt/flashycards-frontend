@@ -4,12 +4,14 @@ import { withRouter, Switch, Route } from 'react-router-dom';
 import { GET, POST, PUT, DELETE } from '../../helperScripts/ajax';
 import Decklist from './Decklist';
 import Detail from './Detail';
+import StudyMode from './StudyMode';
 import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
     selectedDeck: null,
     decks: [],
+    ajaxLoaded: false,
   };
 
   fetchDecks = () => {
@@ -17,7 +19,8 @@ class Dashboard extends Component {
     .then(res => {
       this.setState({
         decks: res.data.decks,
-        selectedDeck: res.data.decks[0]
+        selectedDeck: res.data.decks[0],
+        ajaxLoaded: true,
       })
     })
     .catch(err => console.log(err));
@@ -115,7 +118,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { selectedDeck, decks } = this.state;
+    const { selectedDeck, decks, ajaxLoaded } = this.state;
     const path = this.props.match.path;
     return (
       <main className="dashboard">
@@ -124,7 +127,7 @@ class Dashboard extends Component {
           selectedDeckId={selectedDeck && selectedDeck.id}
           selectDeck={this.selectDeck}
         />
-        <Switch>
+        {/* <Switch>
           <Route path={`${path}/decks/:deckId`}>
             <Detail
               selectedDeck={selectedDeck}
@@ -133,7 +136,10 @@ class Dashboard extends Component {
               handleDeckEditSubmit={this.handleDeckEditSubmit}
             />
           </Route>
-        </Switch>
+        </Switch> */}
+        {ajaxLoaded && <StudyMode
+          selectedDeck={selectedDeck}
+        />}
         {this.displayDeckDeleteModal()}
       </main>
     );

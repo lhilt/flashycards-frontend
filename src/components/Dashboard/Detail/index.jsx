@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Switch, Route, Link, withRouter } from 'react-router-dom';
 
 import { GET, POST, PUT, DELETE } from '../../../helperScripts/ajax';
-import Card from './Card';
+import Card from '../Card';
 import CreateCard from './Forms/CreateCard';
 import EditCard from './Forms/EditCard';
+import AddCardButton from './AddCard';
+import DeckInfo from '../DeckInfo';
 import CreateDeck from '../Decklist/Forms/CreateDeck';
 import EditDeck from '../Decklist/Forms/EditDeck';
 import './Detail.css';
@@ -166,6 +168,7 @@ class Detail extends Component {
       this.setState({
         showFront: true,
         ajaxLoaded: false,
+        currentCardIndex: 0,
       });
       this.fetchCards();
     }
@@ -205,12 +208,7 @@ class Detail extends Component {
           </Route>
           <Route exact path=''>
             <div>
-              <Link
-                to={`${url}/cards/create`}
-                className="btn btn-info add-card"
-              >
-                + Add a Card
-              </Link>
+              <AddCardButton />
               {cards.length > 0 &&
                 <>
                 <Card
@@ -232,10 +230,7 @@ class Detail extends Component {
           </Route>
         </Switch>
         {selectedDeck &&
-          <div className="deck-info">
-            <h3>{selectedDeck.name}</h3>
-            <p>{selectedDeck.description}</p>
-          </div>
+          <DeckInfo selectedDeck={selectedDeck} />
         }
       </div>
     );
