@@ -1,10 +1,10 @@
 import React from 'react';
 
-const CardStudyOptions = ({ markWrong }) => {
+const CardStudyOptions = ({ markWrong, markRight }) => {
   return (
     <div className="card-options">
-      <div className="card-options-link">right</div>
-      <div className="card-options-link" onClick={markWrong}>wrong</div>
+      <div className="card-options-link right" onClick={markRight}>right</div>
+      <div className="card-options-link wrong" onClick={markWrong}>wrong</div>
     </div>
   );
 }

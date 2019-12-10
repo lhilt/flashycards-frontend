@@ -111,8 +111,6 @@ class Detail extends Component {
         })
       })
       .catch(err => console.log(err));
-
-      // this.props.history.goBack();
   };
 
   handleCardEditSubmit = (e, updated) => {
@@ -132,8 +130,6 @@ class Detail extends Component {
         })
       })
       .catch(err => console.log(err));
-
-    // this.props.history.goBack();
   };
 
   handleDeleteSubmit = (card) => {

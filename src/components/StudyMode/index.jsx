@@ -81,10 +81,34 @@ class StudyMode extends Component {
     }
   };
 
+  markRight = () => {
+    const { markedWrong, currentCardIndex } = this.state;
+    if (markedWrong.includes(currentCardIndex)) {
+      const index = markedWrong.findIndex(x => x === currentCardIndex);
+      const updatedWrongs = [...markedWrong];
+      updatedWrongs.splice(index, 1);
+
+      this.setState({
+        markedWrong: updatedWrongs,
+      });
+    }
+  }
+
   markWrong = () => {
-    this.setState({
-      markedWrong: this.state.markedWrong.concat(this.state.currentCardIndex),
-    })
+    const { markedWrong, currentCardIndex } = this.state;
+    if (!markedWrong.includes(currentCardIndex)) {
+      this.setState({
+        markedWrong: markedWrong.concat(currentCardIndex),
+      });
+    }
+    // else {
+    //   const index = markedWrong.findIndex(x => x === currentCardIndex);
+    //   const updatedWrongs = [...markedWrong];
+    //   updatedWrongs.splice(index, 1);
+    //   this.setState({
+    //     markedWrong: updatedWrongs,
+    //   });
+    // }
   }
 
   componentDidMount = () => {
@@ -108,9 +132,10 @@ class StudyMode extends Component {
   }
 
   render() {
-    const { currentCardIndex, cards, showFront } = this.state;
+    const { currentCardIndex, cards, showFront, markedWrong } = this.state;
     const card = cards[currentCardIndex];
     const selectedDeck = this.findSelectedDeck();
+
     return (
       <div className="study-mode">
         <LinkToDashboard deckId={this.props.match.params.deckId} />
@@ -121,8 +146,10 @@ class StudyMode extends Component {
             card={card}
             studyMode={true}
             markWrong={this.markWrong}
+            markRight={this.markRight}
             index={currentCardIndex}
             totalCards={cards.length}
+            wrong={markedWrong.includes(currentCardIndex)}
             side={showFront ? 'front' : 'back'}
           />
           <CardButtonGroup

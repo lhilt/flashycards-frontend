@@ -7,11 +7,16 @@ import './Card.css';
 class Card extends Component {
   render() {
     const { card, side, index, totalCards, studyMode } = this.props;
+    const studyClass = studyMode ? 'study-card' : '';
+    const wrongClass = this.props.wrong ? 'wrong-card' : '';
     return (
-      <div className={`flashcard ${studyMode ? 'study-card' : ''}`}>
+      <div className={`flashcard ${studyClass} ${wrongClass}`}>
         {studyMode
           ?
-          <CardStudyOptions markWrong={this.props.markWrong} />
+          <CardStudyOptions
+            markWrong={this.props.markWrong}
+            markRight={this.props.markRight}
+          />
           :
           <CardOptions toggleEditForm={this.props.toggleEditForm} />}
         <div className="card-text">
