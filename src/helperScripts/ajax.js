@@ -8,7 +8,7 @@ const authOptions = () => ({
   }
 });
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export const GET = (url) => {
   return axios.get(BASE_URL + url, authOptions());
