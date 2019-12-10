@@ -6,13 +6,13 @@ import './Landing.css';
 
 class Landing extends Component {
   render() {
-    const setUser = this.props.setCurrentUser
+    const setUser = this.props.setCurrentUser;
     return (
       <main className="landing row">
-        <section className="col-lg hook">
-          <h1 className="title-text">Unnamed Flashcard App.</h1>
+        <div className="col-lg hook">
+          <h1 className="title-text">Flashr</h1>
           <h3>The ultimate place to study.</h3>
-        </section>
+        </div>
         <section className="col-lg container" id="form-container">
           {this.props.signup
             ?
