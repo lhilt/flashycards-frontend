@@ -18,7 +18,7 @@ class StudyMode extends Component {
 
   findSelectedDeck = () => {
     const { deckId } = this.props.match.params;
-    const selected = this.props.decks.find(deck => deck.id == deckId);
+    const selected = this.props.decks.find(deck => deck.id === Number(deckId));
     return selected;
   }
 

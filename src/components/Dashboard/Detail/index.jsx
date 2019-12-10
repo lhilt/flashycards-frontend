@@ -244,6 +244,8 @@ class Detail extends Component {
           />
         );
         break;
+      default:
+        view = null;
     }
 
     return (
