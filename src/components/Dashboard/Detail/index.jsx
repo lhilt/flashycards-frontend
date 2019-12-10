@@ -37,6 +37,12 @@ class Detail extends Component {
     })
   };
 
+  toggleCardView = () => {
+    this.setState({
+      cardState: cardStates.view,
+    })
+  };
+
   fetchCards = () => {
     const deckPk = this.props.selectedDeck.id;
     GET(`/api/v1/decks/${deckPk}/cards`)
@@ -232,8 +238,9 @@ class Detail extends Component {
       case 'edit':
         view = (
           <EditCard
-            handleSubmit={this.handleCardEditSubmit}
             card={card}
+            handleSubmit={this.handleCardEditSubmit}
+            toggleCardView={this.toggleCardView}
           />
         );
         break;
@@ -241,6 +248,7 @@ class Detail extends Component {
         view = (
           <CreateCard
             handleSubmit={this.handleCardCreateSubmit}
+            toggleCardView={this.toggleCardView}
           />
         );
         break;

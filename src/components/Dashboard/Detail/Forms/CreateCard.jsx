@@ -15,8 +15,13 @@ class CreateCard extends Component {
   render() {
     const { front, back } = this.state;
     return (
-      <div className="jumbotron flash-form" id="create-card-form">
-        <h2>Create a Card</h2>
+      <div className="jumbotron flash-form flash-form" id="create-card-form">
+        <div className="flash-form-header">
+          <h2>Create a Card</h2>
+          <button type="button" className="close" aria-label="Close" onClick={this.props.toggleCardView}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <form
           id="create-card"
           onSubmit={(e) => this.props.handleSubmit(e, this.state)}

@@ -15,6 +15,13 @@
 
 .flash-form {
   margin: 40px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .card-btn-group {

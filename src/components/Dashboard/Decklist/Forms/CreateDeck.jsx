@@ -31,11 +31,11 @@ class CreateDeck extends Component {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
           <div className="modal-header">
-              Create a deck
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+            <h2>Create a deck</h2>
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+            </button>
+          </div>
             <div className="modal-body">
               <form
                 id="create-deck"
