@@ -15,7 +15,7 @@ class DeckInfoContainer extends Component {
     GET(`/api/v1/decks`)
     .then(res => {
       this.setState({
-        decks: res.data.decks,
+        decks: [{name: 'example', description: 'here it is'}, ...res.data.decks],
         ajaxLoaded: true,
       })
     })
@@ -37,8 +37,6 @@ class DeckInfoContainer extends Component {
         })
       })
       .catch(err => console.log(err));
-
-      // this.props.history.goBack();
   };
 
   handleDeckEditSubmit = (edited) => {
