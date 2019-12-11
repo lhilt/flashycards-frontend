@@ -15,7 +15,7 @@ class DeckInfoContainer extends Component {
     GET(`/api/v1/decks`)
     .then(res => {
       this.setState({
-        decks: [{name: 'example', description: 'here it is'}, ...res.data.decks],
+        decks: [{name: 'example', description: 'here it is', id: '1'}, ...res.data.decks],
         ajaxLoaded: true,
       })
     })
