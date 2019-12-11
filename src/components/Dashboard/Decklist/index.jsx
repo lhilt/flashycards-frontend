@@ -15,7 +15,7 @@ const Decklist = (props) => {
     >
       + Add a Deck
     </div>
-    {decks.map(deck => (
+    {decks.length > 0 && decks.map(deck => (
       <Deck
         key={deck.id}
         deck={deck}

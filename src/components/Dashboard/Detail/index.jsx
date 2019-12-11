@@ -259,52 +259,6 @@ class Detail extends Component {
     return (
       <div className="detail">
         {view}
-        {/* <Switch>
-          <Route path={`${path}/cards/create`}>
-            <CreateCard
-              handleSubmit={this.handleCardCreateSubmit}
-            />
-          </Route>
-          <Route path={`${path}/card/edit`}>
-            <EditCard
-              handleSubmit={this.handleCardEditSubmit}
-              card={card}
-            />
-          </Route>
-          <Route path={`/dashboard/decks/create`}>
-            <CreateDeck
-              handleSubmit={this.props.handleDeckCreateSubmit}
-            />
-          </Route>
-          <Route path={`${path}/deck/edit`}>
-            <EditDeck
-              handleSubmit={this.props.handleDeckEditSubmit}
-              deck={selectedDeck}
-            />
-          </Route>
-          <Route exact path=''>
-            <div>
-              <AddCardButton />
-              {cards.length > 0 &&
-                <>
-                <Card
-                  key={card.id}
-                  card={card}
-                  index={currentCardIndex}
-                  totalCards={cards.length}
-                  side={showFront ? 'front' : 'back'}
-                />
-                <div className="card-btn-group">
-                  <span onClick={this.prev}>&lsaquo;</span>
-                  <span onClick={this.flip}>flip</span>
-                  <span onClick={this.next}>&rsaquo;</span>
-                </div>
-                </>
-              }
-              {this.displayCardDeleteModal()}
-            </div>
-          </Route>
-        </Switch> */}
         {selectedDeck &&
           <DeckInfo selectedDeck={selectedDeck} />
         }
