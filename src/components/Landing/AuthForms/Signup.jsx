@@ -21,7 +21,6 @@ class SignupForm extends Component {
     e.preventDefault();
     POST('/signup', newUser)
     .then(res => {
-      console.log(res);
       this.props.history.push('/dashboard');
       this.props.setUser(newUser.username);
     })

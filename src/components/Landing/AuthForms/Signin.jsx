@@ -20,7 +20,6 @@ class SigninForm extends Component {
 
     POST('/login', userInfo)
     .then(res => {
-      console.log(res);
       this.props.history.push('/dashboard');
       this.props.setUser(userInfo.username);
     })
