@@ -10,18 +10,17 @@ class Card extends Component {
     const studyClass = studyMode ? 'study-card' : '';
     const wrongClass = this.props.wrong ? 'wrong-card' : '';
     return (
-      <div className={`flashcard ${studyClass} ${wrongClass}`}>
-        {studyMode
-          ?
+      <div className={`flashcard ${side} ${studyClass} ${wrongClass}`}>
+        {!studyMode &&
+          <CardOptions toggleEditForm={this.props.toggleEditForm} />}
+        <div className="card-text">
+          <p>{card[side]}</p>
+        </div>
+        {studyMode &&
           <CardStudyOptions
             markWrong={this.props.markWrong}
             markRight={this.props.markRight}
-          />
-          :
-          <CardOptions toggleEditForm={this.props.toggleEditForm} />}
-        <div className="card-text">
-          <p className={`${side}`}>{card[side]}</p>
-        </div>
+          />}
         <div className="card-info">
           <span>{side}</span>
           <span>{`${index+1}/${totalCards}`}</span>

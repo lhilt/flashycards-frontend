@@ -9,7 +9,7 @@
 }
 
 .study-card {
-  margin: 75px auto 25px auto;
+  margin: 60px auto 25px auto;
 }
 
 .card-options {
@@ -20,6 +20,21 @@
   display: inline-block;
   color: #17a2b8;
   margin: 4px 6px;
+}
+
+.card-study {
+  margin-top: -70px;
+  text-align: center;
+}
+
+.card-study-option {
+  display: inline-block;
+  margin: 0 30px;
+  font-size: 70px;
+}
+
+.card-study-option:hover {
+  cursor: pointer;
 }
 
 .right {
@@ -34,6 +49,10 @@
   border: 3px solid red;
 }
 
+.right-card {
+  border: 3px solid green;
+}
+
 .card-options-link:hover {
   cursor: pointer;
 }
@@ -44,13 +63,6 @@
   justify-content: center;
   align-items: center;
   padding: 15px;
-}
-
-.front {
-  font-size: 40px;
-}
-
-.back {
   font-size: 40px;
 }
 

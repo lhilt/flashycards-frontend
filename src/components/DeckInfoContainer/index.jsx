@@ -15,7 +15,7 @@ class DeckInfoContainer extends Component {
     GET(`/api/v1/decks`)
     .then(res => {
       this.setState({
-        decks: [{name: 'example', description: 'here it is', id: '1'}, ...res.data.decks],
+        decks: res.data.decks,
         ajaxLoaded: true,
       })
     })
@@ -63,15 +63,23 @@ class DeckInfoContainer extends Component {
   handleDeckDeleteSubmit = (deck) => {
     const { decks } = this.state;
     const deckId = deck.id;
-    const newDeckId = decks.findIndex(d => d.id === deck.id) + 1;
+    const deckIndex = decks.findIndex(d => d.id);
+    const newDeckId =
+      deckIndex !== decks.length - 1
+      ?
+      decks[deckIndex + 1].id
+      :
+      decks[deckIndex - 1].id;
+    console.log({newDeckId})
 
     setTimeout(1000);
     DELETE(`/api/v1/decks/${deckId}/delete`)
       .then(() => {
-        this.setState(prevState => ({
-          decks: decks.filter(x => x !== deck),
+        this.setState(({
+          decks: decks.filter(x => x.id !== deck.id),
         }));
-        this.props.history.push(`/dashboard/decks/${newDeckId}`)
+        console.log('set state')
+        this.props.history.push(`/dashboard/decks/${newDeckId}`);
       })
       .catch(err => console.log(err));
   };
