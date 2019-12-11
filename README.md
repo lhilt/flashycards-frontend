@@ -22,7 +22,7 @@ get back to studying.
  
 ## Installation Steps
 After cloning the repo...
- - run `npm i
+ - run `npm i`
 
 ## Future Features
  - Setting a study timer
