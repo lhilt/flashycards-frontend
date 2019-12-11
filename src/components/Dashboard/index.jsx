@@ -17,10 +17,11 @@ class Dashboard extends Component {
     const { decks, selectDeck } = this.props;
     const selectedDeck = this.findSelectedDeck();
     return (
-      <main className="dashboard">
+      <>
+      {selectedDeck && <main className="dashboard">
         <Decklist
           decks={decks}
-          selectedDeckId={selectedDeck && selectedDeck.id}
+          selectedDeckId={selectedDeck.id}
           selectDeck={selectDeck}
           handleDeckCreateSubmit={this.props.handleDeckCreateSubmit}
           handleDeckEditSubmit={this.props.handleDeckEditSubmit}
@@ -29,7 +30,8 @@ class Dashboard extends Component {
         <Detail
           selectedDeck={selectedDeck}
         />
-      </main>
+      </main>}
+      </>
     );
   }
 }
