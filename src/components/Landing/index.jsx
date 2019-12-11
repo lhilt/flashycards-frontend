@@ -10,7 +10,7 @@ class Landing extends Component {
     return (
       <main className="landing row">
         <div className="col-lg hook">
-          <h1 className="title-text">Flashr</h1>
+          <h1 className="title-text">FlashyCards</h1>
           <h3>The ultimate place to study.</h3>
         </div>
         <section className="col-lg container" id="form-container">
