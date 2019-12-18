@@ -25,6 +25,18 @@ class Detail extends Component {
     cardState: cardStates.view,
   };
 
+  fetchCards = () => {
+    const deckPk = this.props.selectedDeck.id;
+    GET(`/api/v1/decks/${deckPk}/cards`)
+      .then(res => {
+        this.setState({
+          cards: res.data.cards,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  // toggle visual display
   toggleEditForm = () => {
     this.setState({
       cardState: cardStates.edit,
@@ -43,17 +55,7 @@ class Detail extends Component {
     })
   };
 
-  fetchCards = () => {
-    const deckPk = this.props.selectedDeck.id;
-    GET(`/api/v1/decks/${deckPk}/cards`)
-      .then(res => {
-        this.setState({
-          cards: res.data.cards,
-        });
-      })
-      .catch(err => console.log(err));
-  };
-
+  // card controls
   flip = () => {
     this.setState(prevState => ({
       showFront: !prevState.showFront,
@@ -102,6 +104,7 @@ class Detail extends Component {
     }
   };
 
+  // card CRUD
   handleCardCreateSubmit = (e, newCard) => {
     e.preventDefault();
     const deckPk = this.props.selectedDeck.id;
@@ -178,6 +181,7 @@ class Detail extends Component {
     );
   };
 
+  // lifecycle methods
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyUp);
     if (this.props.selectedDeck) {
