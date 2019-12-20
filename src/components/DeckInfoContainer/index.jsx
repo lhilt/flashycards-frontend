@@ -4,6 +4,7 @@ import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { GET, POST, PUT, DELETE } from '../../helperScripts/ajax';
 import Dashboard from '../Dashboard';
 import StudyMode from '../StudyMode';
+import StarterPage from '../StarterPage';
 
 class DeckInfoContainer extends Component {
   state = {
@@ -34,7 +35,8 @@ class DeckInfoContainer extends Component {
         const newDeck = res.data.deck;
         this.setState({
           decks: [newDeck, ...this.state.decks],
-        })
+        });
+        this.props.history.push(`/dashboard/decks/${newDeck.id}`);
       })
       .catch(err => console.log(err));
   };
@@ -64,22 +66,26 @@ class DeckInfoContainer extends Component {
     const { decks } = this.state;
     const deckId = deck.id;
     const deckIndex = decks.findIndex(d => d.id);
-    const newDeckId =
-      deckIndex !== decks.length - 1
-      ?
-      decks[deckIndex + 1].id
-      :
-      decks[deckIndex - 1].id;
-    console.log({newDeckId})
 
     setTimeout(1000);
     DELETE(`/api/v1/decks/${deckId}/delete`)
       .then(() => {
-        this.setState(({
+        this.setState({
           decks: decks.filter(x => x.id !== deck.id),
-        }));
-        console.log('set state')
-        this.props.history.push(`/dashboard/decks/${newDeckId}`);
+        }, () => {
+          const { decks } = this.state;
+          if (decks.length === 0) {
+            this.props.history.push('/dashboard');
+          } else {
+            const newDeckId =
+              deckIndex !== decks.length - 1
+              ?
+              decks[deckIndex + 1].id
+              :
+              decks[deckIndex - 1].id;
+            this.props.history.push(`/dashboard/decks/${newDeckId}`);
+          }
+        });
       })
       .catch(err => console.log(err));
   };
@@ -95,8 +101,14 @@ class DeckInfoContainer extends Component {
       return null;
     }
     if (decks.length === 0) {
-      return null;
+      return (
+        <StarterPage
+          handleDeckCreateSubmit={this.handleDeckCreateSubmit}
+          currentUsername={this.props.currentUsername}
+        />
+      );
     }
+
     const deckId = decks[0].id;
 
     return (

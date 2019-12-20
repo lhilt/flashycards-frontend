@@ -101,14 +101,6 @@ class StudyMode extends Component {
         markedWrong: markedWrong.concat(currentCardIndex),
       });
     }
-    // else {
-    //   const index = markedWrong.findIndex(x => x === currentCardIndex);
-    //   const updatedWrongs = [...markedWrong];
-    //   updatedWrongs.splice(index, 1);
-    //   this.setState({
-    //     markedWrong: updatedWrongs,
-    //   });
-    // }
   }
 
   componentDidMount = () => {

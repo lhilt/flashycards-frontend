@@ -9,7 +9,7 @@ export default (props) => (
     <Route path='/'>
       {props.currentUsername
         ?
-        <DeckInfoContainer />
+        <DeckInfoContainer currentUsername={props.currentUsername}/>
         :
         <Landing
           signup={props.signup}

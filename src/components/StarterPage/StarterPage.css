@@ -1,0 +1,17 @@
+.starter-page {
+  padding-top: 100px;
+  height: calc(100vh - 40px);
+  background: #444444;
+  text-align: center;
+}
+
+.starter-welcome {
+  color: #a0e8f3;
+  text-align: center;
+}
+
+.starter-prompt {
+  font-size: 1.4em;
+  color: #f7f7f7;
+  margin-top: 50px;
+}

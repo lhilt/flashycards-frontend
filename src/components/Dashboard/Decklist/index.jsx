@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Deck from './Deck';
+import AddDeck from './AddDeck';
 import CreateDeck from './Forms/CreateDeck';
 import './Decklist.css';
 
@@ -8,13 +9,7 @@ const Decklist = (props) => {
   const { decks, selectDeck, selectedDeckId } = props;
   return (
   <section className="decklist">
-    <div
-      className="btn btn-info add-deck"
-      data-toggle="modal"
-      data-target="#createDeck"
-    >
-      + Add a Deck
-    </div>
+    <AddDeck />
     {decks.length > 0 && decks.map(deck => (
       <Deck
         key={deck.id}

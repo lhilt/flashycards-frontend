@@ -18,7 +18,7 @@ class Dashboard extends Component {
     const selectedDeck = this.findSelectedDeck();
     return (
       <>
-      {selectedDeck && <main className="dashboard">
+      <main className="dashboard">
         <Decklist
           decks={decks}
           selectedDeckId={selectedDeck.id}
