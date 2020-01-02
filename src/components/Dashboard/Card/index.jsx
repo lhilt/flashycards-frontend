@@ -9,12 +9,22 @@ class Card extends Component {
     const { card, side, index, totalCards, studyMode } = this.props;
     const studyClass = studyMode ? 'study-card' : '';
     const wrongClass = this.props.wrong ? 'wrong-card' : '';
+    let style = null;
+    if (card[side].length > 130 && card[side].length < 285) {
+      style = {
+        fontSize: '25px',
+      }
+    } else if (card[side].length > 285) {
+      style = {
+        fontSize: '18px',
+      }
+    }
     return (
       <div className={`flashcard ${side} ${studyClass} ${wrongClass}`}>
         {!studyMode &&
           <CardOptions toggleEditForm={this.props.toggleEditForm} />}
         <div className="card-text">
-          <p>{card[side]}</p>
+          <p style={style}>{card[side]}</p>
         </div>
         {studyMode &&
           <CardStudyOptions
